@@ -24,7 +24,7 @@ jobs:
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DO_TOKEN }} 
+          token: ${{ secrets.DO_TOKEN }}
 
       - name: Login to DOCR
         run: doctl registry login
@@ -38,8 +38,11 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
+          build-args: |
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
           tags: |
             ${{ steps.meta.outputs.docr }}:latest
+            ${{ steps.meta.outputs.docr }}:${{ github.sha }}
 
       - name: Upload compose files
         uses: appleboy/scp-action@v0.1.7
@@ -60,15 +63,27 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
-            # Docker / Compose si faltan
+            # Instala Docker/Compose si faltan
             docker --version || curl -fsSL https://get.docker.com | sh
             docker compose version || sudo curl -L "https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
+
             # Carpeta de deploy
             mkdir -p ${{ secrets.SERVER_PATH }}
             cd ${{ secrets.SERVER_PATH }}
+
             # Login al registry
             echo "${{ secrets.DO_TOKEN }}" | docker login registry.digitalocean.com -u doctl --password-stdin
-            # Señalar imagen a usar
+
+            # (Opcional) escribir .env desde secrets del repo
+            cat > .env <<'EOF'
+            RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+            CONTACT_TO=${{ secrets.CONTACT_TO }}
+            CONTACT_FROM=${{ secrets.CONTACT_FROM }}
+            RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
+            EOF
+
+            # Imagen a usar
             export DOCR_IMAGE=${{ steps.meta.outputs.docr }}:latest
+
             docker compose pull
             docker compose up -d --remove-orphans
