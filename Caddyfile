@@ -1,0 +1,4 @@
+stevenpatino.dev, www.stevenpatino.dev {
+  encode zstd gzip
+  reverse_proxy app:3000
+}
