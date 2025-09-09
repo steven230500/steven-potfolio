@@ -44,39 +44,7 @@ jobs:
             ${{ steps.meta.outputs.docr }}:latest
             ${{ steps.meta.outputs.docr }}:${{ github.sha }}
 
-      # --- Verificación de archivos locales antes del SCP ---
-      - name: Sanity check files exist
-        run: |
-          pwd
-          ls -la
-          test -f ./docker-compose.yml || (echo "Falta docker-compose.yml" && exit 1)
-          test -f ./Caddyfile || (echo "Falta Caddyfile" && exit 1)
-
-      # --- Asegura que exista el directorio remoto antes del SCP ---
-      - name: Prepare server directory
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            mkdir -p ${{ secrets.SERVER_PATH }}
-
-      # --- Sube los archivos con rutas explícitas ---
-      - name: Upload compose files
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: |
-            ./docker-compose.yml
-            ./Caddyfile
-          target: ${{ secrets.SERVER_PATH }}
-          overwrite: true
-          strip_components: 0
-
-      - name: Remote deploy with SSH
+      - name: Deploy remoto (escribe archivos y levanta)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -84,26 +52,72 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
-            # Instala Docker/Compose si faltan
-            docker --version || curl -fsSL https://get.docker.com | sh
-            docker compose version || sudo curl -L "https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
 
+            # Instalar Docker si falta
+            docker --version || curl -fsSL https://get.docker.com | sh
+
+            # Asegurar "docker compose" o "docker-compose"
+            if docker compose version >/dev/null 2>&1; then
+              COMPOSE="docker compose"
+            else
+              sudo curl -L "https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+              COMPOSE="docker-compose"
+            fi
+
+            # Carpeta de deploy
+            mkdir -p ${{ secrets.SERVER_PATH }}
             cd ${{ secrets.SERVER_PATH }}
 
-            # Login al registry
-            echo "${{ secrets.DO_TOKEN }}" | docker login registry.digitalocean.com -u doctl --password-stdin
+            # Caddyfile
+            cat > Caddyfile <<'CADDY'
+            stevenpatino.dev, www.stevenpatino.dev {
+              encode zstd gzip
+              reverse_proxy app:3000
+            }
+            CADDY
 
-            # (Opcional) escribir .env desde secrets del repo
-            cat > .env <<'EOF'
+            # docker-compose.yml
+            cat > docker-compose.yml <<'COMPOSE'
+            services:
+              app:
+                image: ${DOCR_IMAGE:-registry.digitalocean.com/steven-portfolio-reg/steven-portfolio:latest}
+                env_file: .env
+                restart: unless-stopped
+
+              caddy:
+                image: caddy:2
+                restart: unless-stopped
+                ports:
+                  - "80:80"
+                  - "443:443"
+                volumes:
+                  - ./Caddyfile:/etc/caddy/Caddyfile:ro
+                  - caddy_data:/data
+                  - caddy_config:/config
+                depends_on:
+                  - app
+
+            volumes:
+              caddy_data:
+              caddy_config:
+            COMPOSE
+
+            # .env (runtime)
+            cat > .env <<'ENVVARS'
             RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
             CONTACT_TO=${{ secrets.CONTACT_TO }}
             CONTACT_FROM=${{ secrets.CONTACT_FROM }}
             RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
-            EOF
+            ENVVARS
 
-            # Imagen a usar
-            export DOCR_IMAGE=${{ steps.meta.outputs.docr }}:latest
+            # Login al registry y levantar
+            echo "${{ secrets.DO_TOKEN }}" | docker login registry.digitalocean.com -u doctl --password-stdin
+            export DOCR_IMAGE=${{ env.REGISTRY }}/${{ secrets.DOCR_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-            docker compose pull
-            docker compose up -d --remove-orphans
+            $COMPOSE pull
+            $COMPOSE up -d --remove-orphans
+
+            echo "=== Archivos ==="; ls -la
+            echo "=== Estado ==="; $COMPOSE ps
