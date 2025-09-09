@@ -3,7 +3,7 @@ export const translations = {
     // Hero Section
     title: "Sr. Software Developer",
     description:
-      "Full Stack Developer with 5+ years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js.",
+      "Full Stack Developer with 7+ years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js.",
     viewWork: "View My Work",
 
     // About Section
@@ -85,7 +85,7 @@ export const translations = {
     // Hero Section
     title: "Desarrollador de Software Sr.",
     description:
-      "Desarrollador Full Stack con más de 5 años de experiencia construyendo soluciones móviles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
+      "Desarrollador Full Stack con más de 7 años de experiencia construyendo soluciones móviles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
     viewWork: "Ver Mi Trabajo",
 
     // About Section
