@@ -4,7 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "@/lib/language-context";
-import { ThemeProvider } from "@/components/theme-provider"; // ✅ usa tu wrapper
+import { ThemeProvider } from "@/components/theme-provider"; 
 import { Suspense } from "react";
 import "./globals.css";
 import Script from "next/script";
@@ -12,7 +12,7 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: "Steven Patiño Urquijo - Sr. Software Developer & Systems Engineer",
   description:
-    "Full Stack Developer with 5+ years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js. Co-founder at iHabitar.",
+    "Full Stack Developer with 7+ years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js. Co-founder at iHabitar.",
   keywords: [
     "Steven Patiño",
     "Software Developer",
