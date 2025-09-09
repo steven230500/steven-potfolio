@@ -161,8 +161,6 @@ export default function RootLayout({
           id="recaptcha"
           strategy="afterInteractive"
           src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-          onLoad={() => console.log("reCAPTCHA loaded")}
-          onError={() => console.warn("reCAPTCHA failed to load")}
         />
       </body>
     </html>
