@@ -1,6 +1,6 @@
 services:
   app:
-    image: ${DOCR_IMAGE:-registry.digitalocean.com/REGISTRY/steven-portfolio:latest}
+    image: ${DOCR_IMAGE:-registry.digitalocean.com/steven-portfolio-reg/steven-portfolio:latest}
     env_file: .env
     restart: unless-stopped
 
