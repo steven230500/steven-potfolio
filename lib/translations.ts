@@ -9,7 +9,7 @@ export const translations = {
     // About Section
     aboutTitle: "About Me",
     aboutDescription1:
-      "I'm a passionate Full Stack Developer with over 5 years of experience creating innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend tools like Go, Node.js, and various databases during this time.",
+      "I'm a passionate Full Stack Developer with over 7 years of experience creating innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend tools like Go, Node.js, and various databases during this time.",
     aboutDescription2:
       "I specialize in Flutter for mobile development and have solid experience with backend tools like Go, Node.js, and various databases. I love sharing what I know with other developers.",
     aboutDescription3:
@@ -91,7 +91,7 @@ export const translations = {
     // About Section
     aboutTitle: "Acerca de Mí",
     aboutDescription1:
-      "Soy un Desarrollador Full Stack apasionado con más de 5 años de experiencia creando soluciones móviles y web innovadoras. Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Go, Node.js y varias bases de datos durante este tiempo.",
+      "Soy un Desarrollador Full Stack apasionado con más de 7 años de experiencia creando soluciones móviles y web innovadoras. Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Go, Node.js y varias bases de datos durante este tiempo.",
     aboutDescription2:
       "Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Go, Node.js y varias bases de datos. Me encanta compartir lo que sé con otros desarrolladores.",
     aboutDescription3:
