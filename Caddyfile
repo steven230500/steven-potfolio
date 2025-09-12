@@ -1,3 +1,26 @@
+api.hypeatlas.app {
+    encode zstd gzip
+
+    @cors header Origin *
+    header {
+        # CORS (eco del origin si viene definido)
+        Access-Control-Allow-Origin "{http.request.header.Origin}"
+        Access-Control-Allow-Methods "GET, POST, OPTIONS"
+        Access-Control-Allow-Headers "Authorization, Content-Type, X-API-Key"
+        Access-Control-Allow-Credentials "true"
+        defer
+    }
+
+    @options method OPTIONS
+    respond @options "" 204
+
+    # Cache corto del esquema
+    @openapi path /openapi.yaml
+    header @openapi Cache-Control "public, max-age=60"
+
+    reverse_proxy hypeatlas-api:8080
+}
+
 stevenpatino.dev, www.stevenpatino.dev {
   encode zstd gzip
   reverse_proxy app:3000
