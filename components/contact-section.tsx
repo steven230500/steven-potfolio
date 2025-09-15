@@ -247,21 +247,21 @@ export function ContactSection() {
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Input
+                    <input
+                      type="text"
                       placeholder={t.firstName}
                       {...register("firstName")}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       aria-invalid={!!errors.firstName}
-                      onChange={(e) => {
-                        console.log("firstName changed:", e.target.value);
-                        register("firstName").onChange(e);
-                      }}
                     />
                     {errors.firstName && <p className="mt-1 text-xs text-destructive">{errors.firstName.message}</p>}
                   </div>
                   <div>
-                    <Input
+                    <input
+                      type="text"
                       placeholder={t.lastName}
                       {...register("lastName")}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       aria-invalid={!!errors.lastName}
                     />
                     {errors.lastName && <p className="mt-1 text-xs text-destructive">{errors.lastName.message}</p>}
@@ -269,29 +269,32 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <Input
-                    placeholder={t.emailAddress}
+                  <input
                     type="email"
+                    placeholder={t.emailAddress}
                     {...register("email")}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     aria-invalid={!!errors.email}
                   />
                   {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>}
                 </div>
 
                 <div>
-                  <Input
+                  <input
+                    type="text"
                     placeholder={t.subject}
                     {...register("subject")}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     aria-invalid={!!errors.subject}
                   />
                   {errors.subject && <p className="mt-1 text-xs text-destructive">{errors.subject.message}</p>}
                 </div>
 
                 <div>
-                  <Textarea
+                  <textarea
                     placeholder={t.yourMessage}
-                    className="min-h-[120px]"
                     {...register("message")}
+                    className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     aria-invalid={!!errors.message}
                   />
                   {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>}
