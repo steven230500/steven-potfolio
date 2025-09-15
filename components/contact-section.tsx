@@ -69,9 +69,11 @@ export function ContactSection() {
     reset,
     setError,
     clearErrors,
+    trigger,
     formState: { errors, isSubmitting: formIsSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    mode: "onSubmit", // Only validate on form submission
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -83,9 +85,23 @@ export function ContactSection() {
   });
 
   const onSubmit = async (values: FormValues) => {
+    console.log("Form submitted with values:", values);
+
     try {
       // Clear any previous errors
       clearErrors();
+
+      // Validate all fields before proceeding
+      const isValid = await trigger();
+      if (!isValid) {
+        console.log("Form validation failed");
+        toast({
+          title: "Campos requeridos",
+          description: "Por favor completa todos los campos correctamente.",
+          variant: "destructive",
+        });
+        return;
+      }
 
       const token = await getRecaptchaToken();
       if (!token) {
@@ -97,6 +113,7 @@ export function ContactSection() {
         return;
       }
 
+      console.log("Sending contact form...");
       const res = await sendContact({ ...values, recaptchaToken: token });
 
       if (res.ok) {
@@ -210,22 +227,39 @@ export function ContactSection() {
               <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Input placeholder={t.firstName} {...register("firstName")} aria-invalid={!!errors.firstName} />
+                    <Input
+                      placeholder={t.firstName}
+                      {...register("firstName")}
+                      aria-invalid={!!errors.firstName}
+                    />
                     {errors.firstName && <p className="mt-1 text-xs text-destructive">{errors.firstName.message}</p>}
                   </div>
                   <div>
-                    <Input placeholder={t.lastName} {...register("lastName")} aria-invalid={!!errors.lastName} />
+                    <Input
+                      placeholder={t.lastName}
+                      {...register("lastName")}
+                      aria-invalid={!!errors.lastName}
+                    />
                     {errors.lastName && <p className="mt-1 text-xs text-destructive">{errors.lastName.message}</p>}
                   </div>
                 </div>
 
                 <div>
-                  <Input placeholder={t.emailAddress} type="email" {...register("email")} aria-invalid={!!errors.email} />
+                  <Input
+                    placeholder={t.emailAddress}
+                    type="email"
+                    {...register("email")}
+                    aria-invalid={!!errors.email}
+                  />
                   {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>}
                 </div>
 
                 <div>
-                  <Input placeholder={t.subject} {...register("subject")} aria-invalid={!!errors.subject} />
+                  <Input
+                    placeholder={t.subject}
+                    {...register("subject")}
+                    aria-invalid={!!errors.subject}
+                  />
                   {errors.subject && <p className="mt-1 text-xs text-destructive">{errors.subject.message}</p>}
                 </div>
 
