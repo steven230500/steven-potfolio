@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -19,51 +20,39 @@ const formSchema = z.object({
   email: z.string().email("Email inválido"),
   subject: z.string().min(3, "El asunto es muy corto"),
   message: z.string().min(10, "El mensaje es muy corto"),
+  captchaAnswer: z.string().min(1, "La respuesta es requerida"),
   company: z.string().optional(),
+  formStartTime: z.number().optional(),
 });
 type FormValues = z.infer<typeof formSchema>;
 
 
-async function getRecaptchaToken(): Promise<string | null> {
-  // For client-side code, we need to access the env var differently
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || (window as { __NEXT_DATA__?: { props?: { pageProps?: { env?: { NEXT_PUBLIC_RECAPTCHA_SITE_KEY?: string } } } } })?.__NEXT_DATA__?.props?.pageProps?.env?.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+// Bot protection functions
+function generateSimpleCaptcha(): { question: string; answer: number } {
+  const num1 = Math.floor(Math.random() * 10) + 1;
+  const num2 = Math.floor(Math.random() * 10) + 1;
+  return {
+    question: `¿Cuánto es ${num1} + ${num2}?`,
+    answer: num1 + num2
+  };
+}
 
-  console.log("reCAPTCHA siteKey:", siteKey);
-  console.log("process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY:", process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
-  console.log("window object available:", typeof window !== "undefined");
+function isSubmissionTooFast(startTime: number): boolean {
+  const now = Date.now();
+  const timeDiff = now - startTime;
+  return timeDiff < 2000; // Less than 2 seconds
+}
 
-  if (!siteKey || typeof window === "undefined") {
-    console.warn("reCAPTCHA: Site key not found or not in browser environment");
-    console.warn("Site key value:", siteKey);
-    console.warn("Window available:", typeof window !== "undefined");
-    return null;
-  }
+function hasSuspiciousContent(message: string): boolean {
+  const suspiciousPatterns = [
+    /http[s]?:\/\//gi, // URLs
+    /<script/gi, // Script tags
+    /javascript:/gi, // JavaScript URLs
+    /on\w+\s*=/gi, // Event handlers
+    /\b(?:viagra|casino|lottery|winner)\b/gi, // Spam keywords
+  ];
 
-  // Wait for reCAPTCHA to be ready
-  let attempts = 0;
-  const maxAttempts = 10;
-
-  while (attempts < maxAttempts) {
-    const grecaptcha = window.grecaptcha;
-    if (grecaptcha && typeof grecaptcha.execute === "function") {
-      try {
-        const token = await grecaptcha.execute(siteKey, { action: "contact" });
-        if (token && token.length > 0) {
-          return token;
-        }
-      } catch (error) {
-        console.error("reCAPTCHA execution error:", error);
-        return null;
-      }
-    }
-
-    // Wait 500ms before next attempt
-    await new Promise(resolve => setTimeout(resolve, 500));
-    attempts++;
-  }
-
-  console.warn("reCAPTCHA: Failed to get token after", maxAttempts, "attempts");
-  return null;
+  return suspiciousPatterns.some(pattern => pattern.test(message));
 }
 
 
@@ -72,6 +61,10 @@ export function ContactSection() {
   const { toast } = useToast();
 
   console.log("ContactSection rendered");
+
+  // Bot protection state
+  const [captcha, setCaptcha] = useState(generateSimpleCaptcha());
+  const [formStartTime] = useState(Date.now());
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -82,7 +75,9 @@ export function ContactSection() {
       email: "",
       subject: "",
       message: "",
+      captchaAnswer: "",
       company: "",
+      formStartTime,
     },
   });
 
@@ -122,18 +117,38 @@ export function ContactSection() {
         return;
       }
 
-      const token = await getRecaptchaToken();
-      if (!token) {
+      // Bot protection checks
+      if (parseInt(values.captchaAnswer) !== captcha.answer) {
         toast({
           title: "Error de validación",
-          description: "No se pudo validar reCAPTCHA. Recarga la página e intenta de nuevo.",
+          description: "La respuesta al captcha es incorrecta.",
+          variant: "destructive",
+        });
+        // Generate new captcha
+        setCaptcha(generateSimpleCaptcha());
+        return;
+      }
+
+      if (isSubmissionTooFast(values.formStartTime || formStartTime)) {
+        toast({
+          title: "Envío demasiado rápido",
+          description: "Por favor espera un momento antes de enviar.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (hasSuspiciousContent(values.message)) {
+        toast({
+          title: "Contenido sospechoso",
+          description: "El mensaje contiene contenido no permitido.",
           variant: "destructive",
         });
         return;
       }
 
       console.log("Sending contact form...");
-      const res = await sendContact({ ...values, recaptchaToken: token });
+      const res = await sendContact(values);
 
       if (res.ok) {
         toast({
@@ -141,6 +156,8 @@ export function ContactSection() {
           description: "Gracias por contactarme. Te responderé pronto.",
         });
         reset();
+        // Generate new captcha after successful submission
+        setCaptcha(generateSimpleCaptcha());
       } else if (res.error === "bad_captcha") {
         toast({
           title: "Error de validación",
@@ -306,6 +323,20 @@ export function ContactSection() {
                     aria-invalid={!!errors.message}
                   />
                   {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    {captcha.question}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Tu respuesta"
+                    {...register("captchaAnswer")}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    aria-invalid={!!errors.captchaAnswer}
+                  />
+                  {errors.captchaAnswer && <p className="mt-1 text-xs text-destructive">{errors.captchaAnswer.message}</p>}
                 </div>
 
                 <div className="flex gap-2">
