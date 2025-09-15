@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,38 +26,50 @@ type FormValues = z.infer<typeof formSchema>;
 
 async function getRecaptchaToken(): Promise<string | null> {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-  if (!siteKey || typeof window === "undefined") return null;
-
-  const grecaptcha = window.grecaptcha;
-  if (!grecaptcha) return null;
-
-  const ready = grecaptcha.ready;
-  const execute = grecaptcha.execute;
-
-  if (typeof ready === "function") {
-    await new Promise<void>((resolve) => ready(() => resolve()));
-  }
-
-  if (typeof execute !== "function") return null;
-
-  try {
-    return await execute(siteKey, { action: "contact" });
-  } catch {
+  if (!siteKey || typeof window === "undefined") {
+    console.warn("reCAPTCHA: Site key not found or not in browser environment");
     return null;
   }
+
+  // Wait for reCAPTCHA to be ready
+  let attempts = 0;
+  const maxAttempts = 10;
+
+  while (attempts < maxAttempts) {
+    const grecaptcha = window.grecaptcha;
+    if (grecaptcha && typeof grecaptcha.execute === "function") {
+      try {
+        const token = await grecaptcha.execute(siteKey, { action: "contact" });
+        if (token && token.length > 0) {
+          return token;
+        }
+      } catch (error) {
+        console.error("reCAPTCHA execution error:", error);
+        return null;
+      }
+    }
+
+    // Wait 500ms before next attempt
+    await new Promise(resolve => setTimeout(resolve, 500));
+    attempts++;
+  }
+
+  console.warn("reCAPTCHA: Failed to get token after", maxAttempts, "attempts");
+  return null;
 }
 
 
 export function ContactSection() {
   const { t } = useLanguage();
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting: formIsSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -72,13 +83,16 @@ export function ContactSection() {
   });
 
   const onSubmit = async (values: FormValues) => {
-    setIsSubmitting(true);
     try {
+      // Clear any previous errors
+      clearErrors();
+
       const token = await getRecaptchaToken();
       if (!token) {
         toast({
-          title: "No se pudo validar reCAPTCHA",
-          description: "Recarga la página e intenta de nuevo.",
+          title: "Error de validación",
+          description: "No se pudo validar reCAPTCHA. Recarga la página e intenta de nuevo.",
+          variant: "destructive",
         });
         return;
       }
@@ -92,14 +106,49 @@ export function ContactSection() {
         });
         reset();
       } else if (res.error === "bad_captcha") {
-        toast({ title: "reCAPTCHA falló", description: "Intenta de nuevo." });
+        toast({
+          title: "Error de validación",
+          description: "La validación reCAPTCHA falló. Intenta de nuevo.",
+          variant: "destructive",
+        });
       } else if (res.error === "validation") {
-        toast({ title: "Revisa el formulario", description: "Hay campos con errores." });
+        // Handle server-side validation errors
+        if (res.issues) {
+          // res.issues is a flattened error object from Zod
+          const issues = res.issues as Record<string, { message?: string }>;
+          Object.entries(issues).forEach(([field, error]) => {
+            if (error?.message) {
+              setError(field as keyof FormValues, {
+                message: error.message,
+              });
+            }
+          });
+        }
+        toast({
+          title: "Campos requeridos",
+          description: "Por favor completa todos los campos correctamente.",
+          variant: "destructive",
+        });
+      } else if (res.error === "email_failed") {
+        toast({
+          title: "Error al enviar",
+          description: "Hubo un problema al enviar el mensaje. Intenta más tarde.",
+          variant: "destructive",
+        });
       } else {
-        toast({ title: "Ups, no se pudo enviar", description: "Prueba más tarde." });
+        toast({
+          title: "Error desconocido",
+          description: "Ocurrió un error inesperado. Intenta más tarde.",
+          variant: "destructive",
+        });
       }
-    } finally {
-      setIsSubmitting(false);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast({
+        title: "Error de conexión",
+        description: "No se pudo enviar el mensaje. Verifica tu conexión e intenta de nuevo.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -190,8 +239,8 @@ export function ContactSection() {
                   {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>}
                 </div>
 
-                <Button className="w-full" size="lg" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Sending..." : t.sendMessageBtn}
+                <Button className="w-full" size="lg" type="submit" disabled={formIsSubmitting}>
+                  {formIsSubmitting ? "Enviando..." : t.sendMessageBtn}
                 </Button>
               </form>
             </CardContent>

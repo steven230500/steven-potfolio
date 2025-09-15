@@ -3,7 +3,7 @@ api.hypeatlas.app {
 
     @cors header Origin *
     header {
-        # CORS (eco del origin si viene definido)
+        # CORS (eco del origin)
         Access-Control-Allow-Origin "{http.request.header.Origin}"
         Access-Control-Allow-Methods "GET, POST, OPTIONS"
         Access-Control-Allow-Headers "Authorization, Content-Type, X-API-Key"
@@ -14,7 +14,6 @@ api.hypeatlas.app {
     @options method OPTIONS
     respond @options "" 204
 
-    # Cache corto del esquema
     @openapi path /openapi.yaml
     header @openapi Cache-Control "public, max-age=60"
 

@@ -9,9 +9,9 @@ export const translations = {
     // About Section
     aboutTitle: "About Me",
     aboutDescription1:
-      "I'm a passionate Full Stack Developer with over 7 years of experience creating innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend tools like Go, Node.js, and various databases during this time.",
+      "I'm a passionate Full Stack Developer with over 7 years of experience creating innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend tools like Node.js and various databases during this time.",
     aboutDescription2:
-      "I specialize in Flutter for mobile development and have solid experience with backend tools like Go, Node.js, and various databases. I love sharing what I know with other developers.",
+      "I specialize in Flutter for mobile development and have solid experience with backend tools like Node.js and various databases. I love sharing what I know with other developers.",
     aboutDescription3:
       "Currently co-founding iHabitar, where I lead web platform development with React and Next.js, building innovative solutions for real estate management and user experience optimization.",
     quickFacts: "Quick Facts",
@@ -20,7 +20,7 @@ export const translations = {
     education: "Education",
     educationValue: "Systems Engineering",
     specialization: "Specialization",
-    specializationValue: "Full Stack Developer (Go, Node.js)",
+    specializationValue: "Full Stack Developer",
     currentRole: "Current Role",
     currentRoleValue: "Co-Founder at iHabitar",
     location: "Location",
@@ -91,9 +91,9 @@ export const translations = {
     // About Section
     aboutTitle: "Acerca de Mí",
     aboutDescription1:
-      "Soy un Desarrollador Full Stack apasionado con más de 7 años de experiencia creando soluciones móviles y web innovadoras. Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Go, Node.js y varias bases de datos durante este tiempo.",
+      "Soy un Desarrollador Full Stack apasionado con más de 7 años de experiencia creando soluciones móviles y web innovadoras. Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Node.js y varias bases de datos durante este tiempo.",
     aboutDescription2:
-      "Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Go, Node.js y varias bases de datos. Me encanta compartir lo que sé con otros desarrolladores.",
+      "Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Node.js y varias bases de datos. Me encanta compartir lo que sé con otros desarrolladores.",
     aboutDescription3:
       "Actualmente co-fundando iHabitar, donde lidero el desarrollo de plataformas web con React y Next.js, construyendo soluciones innovadoras para gestión inmobiliaria y optimización de experiencia de usuario.",
     quickFacts: "Datos Rápidos",
@@ -102,7 +102,7 @@ export const translations = {
     education: "Educación",
     educationValue: "Ingeniería de Sistemas",
     specialization: "Especialización",
-    specializationValue: "Desarrollador Full Stack (Go, Node.js)",
+    specializationValue: "Desarrollador Full Stack",
     currentRole: "Rol Actual",
     currentRoleValue: "Co-Fundador en iHabitar",
     location: "Ubicación",

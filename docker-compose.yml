@@ -16,7 +16,14 @@ services:
       - caddy_config:/config
     depends_on:
       - app
+    networks:
+      - default
+      - hypeatlas_net 
 
 volumes:
   caddy_data:
   caddy_config:
+
+networks:
+  hypeatlas_net:
+    external: true    
