@@ -25,8 +25,11 @@ type FormValues = z.infer<typeof formSchema>;
 
 
 async function getRecaptchaToken(): Promise<string | null> {
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  // For client-side code, we need to access the env var differently
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || (window as { __NEXT_DATA__?: { props?: { pageProps?: { env?: { NEXT_PUBLIC_RECAPTCHA_SITE_KEY?: string } } } } })?.__NEXT_DATA__?.props?.pageProps?.env?.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   console.log("reCAPTCHA siteKey:", siteKey);
+  console.log("process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY:", process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
   console.log("window object available:", typeof window !== "undefined");
 
   if (!siteKey || typeof window === "undefined") {
