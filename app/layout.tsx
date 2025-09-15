@@ -156,7 +156,7 @@ export default function RootLayout({
             </ThemeProvider>
           </LanguageProvider>
         </Suspense>
-        <Analytics />
+        {/* <Analytics /> */}
         <Script
           id="recaptcha"
           strategy="afterInteractive"

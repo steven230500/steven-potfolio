@@ -14,11 +14,11 @@ import { sendContact } from "@/app/actions/send-contact";
 import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
-  firstName: z.string().min(1, "Required"),
-  lastName: z.string().min(1, "Required"),
-  email: z.string().email("Invalid email"),
-  subject: z.string().min(3, "Too short"),
-  message: z.string().min(10, "Too short"),
+  firstName: z.string().min(1, "El nombre es requerido"),
+  lastName: z.string().min(1, "El apellido es requerido"),
+  email: z.string().email("Email inválido"),
+  subject: z.string().min(3, "El asunto es muy corto"),
+  message: z.string().min(10, "El mensaje es muy corto"),
   company: z.string().optional(),
 });
 type FormValues = z.infer<typeof formSchema>;
@@ -63,15 +63,9 @@ export function ContactSection() {
   const { t } = useLanguage();
   const { toast } = useToast();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setError,
-    clearErrors,
-    trigger,
-    formState: { errors, isSubmitting: formIsSubmitting },
-  } = useForm<FormValues>({
+  console.log("ContactSection rendered");
+
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onSubmit", // Only validate on form submission
     defaultValues: {
@@ -84,8 +78,22 @@ export function ContactSection() {
     },
   });
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    clearErrors,
+    trigger,
+    formState: { errors, isSubmitting: formIsSubmitting },
+  } = form;
+
+  console.log("Form state:", form.getValues());
+  console.log("Form errors:", errors);
+
   const onSubmit = async (values: FormValues) => {
     console.log("Form submitted with values:", values);
+    console.log("Form errors before validation:", errors);
 
     try {
       // Clear any previous errors
@@ -93,6 +101,9 @@ export function ContactSection() {
 
       // Validate all fields before proceeding
       const isValid = await trigger();
+      console.log("Form validation result:", isValid);
+      console.log("Form errors after validation:", errors);
+
       if (!isValid) {
         console.log("Form validation failed");
         toast({
@@ -224,13 +235,26 @@ export function ContactSection() {
               {/* honeypot */}
               <input type="text" tabIndex={-1} autoComplete="off" className="hidden" {...register("company")} />
 
-              <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                noValidate
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  console.log("Form submit event triggered");
+                  console.log("Form data:", new FormData(e.target as HTMLFormElement));
+                  handleSubmit(onSubmit)(e);
+                }}
+                className="space-y-4"
+              >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Input
                       placeholder={t.firstName}
                       {...register("firstName")}
                       aria-invalid={!!errors.firstName}
+                      onChange={(e) => {
+                        console.log("firstName changed:", e.target.value);
+                        register("firstName").onChange(e);
+                      }}
                     />
                     {errors.firstName && <p className="mt-1 text-xs text-destructive">{errors.firstName.message}</p>}
                   </div>
@@ -273,9 +297,28 @@ export function ContactSection() {
                   {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>}
                 </div>
 
-                <Button className="w-full" size="lg" type="submit" disabled={formIsSubmitting}>
-                  {formIsSubmitting ? "Enviando..." : t.sendMessageBtn}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    className="flex-1"
+                    size="lg"
+                    type="submit"
+                    disabled={formIsSubmitting}
+                  >
+                    {formIsSubmitting ? "Enviando..." : t.sendMessageBtn}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    type="button"
+                    onClick={async () => {
+                      console.log("Manual validation triggered");
+                      const result = await trigger();
+                      console.log("Manual validation result:", result);
+                    }}
+                  >
+                    Validar
+                  </Button>
+                </div>
               </form>
             </CardContent>
           </Card>
