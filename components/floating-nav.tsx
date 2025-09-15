@@ -56,8 +56,8 @@ export function FloatingNav() {
       },
       {
         root: null,
-        threshold: [0.15, 0.35, 0.5, 0.75, 0.98],
-        rootMargin: "-72px 0px -35% 0px",
+        threshold: [0.1, 0.25, 0.4, 0.6, 0.8],
+        rootMargin: "-80px 0px -20% 0px",
       }
     )
 

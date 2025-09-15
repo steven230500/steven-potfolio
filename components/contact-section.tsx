@@ -60,13 +60,13 @@ export function ContactSection() {
   const { t } = useLanguage();
   const { toast } = useToast();
 
-  // Bot protection state
-  const [captcha, setCaptcha] = useState(generateSimpleCaptcha());
-  const [formStartTime] = useState(Date.now());
+  // Bot protection state - simplified to prevent re-render issues
+  const [captcha] = useState(() => generateSimpleCaptcha());
+  const [formStartTime] = useState(() => Date.now());
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    mode: "onSubmit", // Only validate on form submission
+    mode: "onSubmit",
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -113,8 +113,6 @@ export function ContactSection() {
           description: "La respuesta al captcha es incorrecta.",
           variant: "destructive",
         });
-        // Generate new captcha
-        setCaptcha(generateSimpleCaptcha());
         return;
       }
 
@@ -144,8 +142,6 @@ export function ContactSection() {
           description: "Gracias por contactarme. Te responderé pronto.",
         });
         reset();
-        // Generate new captcha after successful submission
-        setCaptcha(generateSimpleCaptcha());
       } else if (res.error === "bad_captcha") {
         toast({
           title: "Error de validación",
@@ -313,7 +309,7 @@ export function ContactSection() {
                   {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>}
                 </div>
 
-                <div>
+                <div key={`captcha-${captcha.question}`}>
                   <label className="block text-sm font-medium mb-2">
                     {captcha.question}
                   </label>
