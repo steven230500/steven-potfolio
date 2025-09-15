@@ -60,8 +60,6 @@ export function ContactSection() {
   const { t } = useLanguage();
   const { toast } = useToast();
 
-  console.log("ContactSection rendered");
-
   // Bot protection state
   const [captcha, setCaptcha] = useState(generateSimpleCaptcha());
   const [formStartTime] = useState(Date.now());
@@ -91,21 +89,13 @@ export function ContactSection() {
     formState: { errors, isSubmitting: formIsSubmitting },
   } = form;
 
-  console.log("Form state:", form.getValues());
-  console.log("Form errors:", errors);
-
   const onSubmit = async (values: FormValues) => {
-    console.log("Form submitted with values:", values);
-    console.log("Form errors before validation:", errors);
-
     try {
       // Clear any previous errors
       clearErrors();
 
       // Validate all fields before proceeding
       const isValid = await trigger();
-      console.log("Form validation result:", isValid);
-      console.log("Form errors after validation:", errors);
 
       if (!isValid) {
         console.log("Form validation failed");
@@ -147,7 +137,6 @@ export function ContactSection() {
         return;
       }
 
-      console.log("Sending contact form...");
       const res = await sendContact(values);
 
       if (res.ok) {
@@ -262,12 +251,7 @@ export function ContactSection() {
 
               <form
                 noValidate
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  console.log("Form submit event triggered");
-                  console.log("Form data:", new FormData(e.target as HTMLFormElement));
-                  handleSubmit(onSubmit)(e);
-                }}
+                onSubmit={handleSubmit(onSubmit)}
                 className="space-y-4"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -339,28 +323,14 @@ export function ContactSection() {
                   {errors.captchaAnswer && <p className="mt-1 text-xs text-destructive">{errors.captchaAnswer.message}</p>}
                 </div>
 
-                <div className="flex gap-2">
-                  <Button
-                    className="flex-1"
-                    size="lg"
-                    type="submit"
-                    disabled={formIsSubmitting}
-                  >
-                    {formIsSubmitting ? "Enviando..." : t.sendMessageBtn}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    type="button"
-                    onClick={async () => {
-                      console.log("Manual validation triggered");
-                      const result = await trigger();
-                      console.log("Manual validation result:", result);
-                    }}
-                  >
-                    Validar
-                  </Button>
-                </div>
+                <Button
+                  className="w-full"
+                  size="lg"
+                  type="submit"
+                  disabled={formIsSubmitting}
+                >
+                  {formIsSubmitting ? "Enviando..." : t.sendMessageBtn}
+                </Button>
               </form>
             </CardContent>
           </Card>
