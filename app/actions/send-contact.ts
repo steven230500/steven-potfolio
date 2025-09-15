@@ -9,28 +9,11 @@ const schema = z.object({
   email: z.string().email("Invalid email"),
   subject: z.string().min(3, "Too short"),
   message: z.string().min(10, "Too short"),
-  company: z.string().optional(),    
-  recaptchaToken: z.string().min(1), 
+  captchaAnswer: z.string().min(1, "Captcha required"),
+  company: z.string().optional(),
+  formStartTime: z.number().optional(),
 })
 
-async function verifyRecaptcha(token: string) {
-  const secret = process.env.RECAPTCHA_SECRET_KEY
-  if (!secret) return { success: false, score: 0 }
-
-  const params = new URLSearchParams()
-  params.append("secret", secret)
-  params.append("response", token)
-
-  const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: params,
-    cache: "no-store",
-  })
-
-  const data = (await res.json()) as { success: boolean; score?: number }
-  return { success: !!data.success, score: data.score ?? 0 }
-}
 
 export async function sendContact(input: unknown) {
   const plain =
@@ -41,13 +24,19 @@ export async function sendContact(input: unknown) {
     return { ok: false, error: "validation", issues: parsed.error.flatten() }
   }
 
-  const { firstName, lastName, email, subject, message, company, recaptchaToken } = parsed.data
+  const { firstName, lastName, email, subject, message, company, captchaAnswer, formStartTime } = parsed.data
 
+  // Honeypot check - if company field is filled, it's likely a bot
   if (company && company.length > 0) return { ok: true }
 
-  const check = await verifyRecaptcha(recaptchaToken)
-  if (!check.success || check.score < 0.5) {
+  // Basic bot protection checks
+  if (!captchaAnswer || captchaAnswer.trim().length === 0) {
     return { ok: false, error: "bad_captcha" }
+  }
+
+  // Check if form was submitted too quickly (less than 2 seconds)
+  if (formStartTime && Date.now() - formStartTime < 2000) {
+    return { ok: false, error: "too_fast" }
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
@@ -73,7 +62,6 @@ export async function sendContact(input: unknown) {
 
     return { ok: true }
   } catch (err) {
-    console.error("sendContact error:", err)
     return { ok: false, error: "email_failed" }
   }
 }

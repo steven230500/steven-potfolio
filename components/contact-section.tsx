@@ -98,7 +98,6 @@ export function ContactSection() {
       const isValid = await trigger();
 
       if (!isValid) {
-        console.log("Form validation failed");
         toast({
           title: "Campos requeridos",
           description: "Por favor completa todos los campos correctamente.",
@@ -150,7 +149,13 @@ export function ContactSection() {
       } else if (res.error === "bad_captcha") {
         toast({
           title: "Error de validación",
-          description: "La validación reCAPTCHA falló. Intenta de nuevo.",
+          description: "La respuesta al captcha es incorrecta.",
+          variant: "destructive",
+        });
+      } else if (res.error === "too_fast") {
+        toast({
+          title: "Envío demasiado rápido",
+          description: "Por favor espera un momento antes de enviar.",
           variant: "destructive",
         });
       } else if (res.error === "validation") {
@@ -185,7 +190,6 @@ export function ContactSection() {
         });
       }
     } catch (error) {
-      console.error("Form submission error:", error);
       toast({
         title: "Error de conexión",
         description: "No se pudo enviar el mensaje. Verifica tu conexión e intenta de nuevo.",
