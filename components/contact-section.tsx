@@ -26,8 +26,13 @@ type FormValues = z.infer<typeof formSchema>;
 
 async function getRecaptchaToken(): Promise<string | null> {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  console.log("reCAPTCHA siteKey:", siteKey);
+  console.log("window object available:", typeof window !== "undefined");
+
   if (!siteKey || typeof window === "undefined") {
     console.warn("reCAPTCHA: Site key not found or not in browser environment");
+    console.warn("Site key value:", siteKey);
+    console.warn("Window available:", typeof window !== "undefined");
     return null;
   }
 
