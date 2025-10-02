@@ -69,38 +69,20 @@ jobs:
             mkdir -p ${{ secrets.SERVER_PATH }}
             cd ${{ secrets.SERVER_PATH }}
 
-            # Caddyfile
-            cat > Caddyfile <<'CADDY'
-            stevenpatino.dev, www.stevenpatino.dev {
-              encode zstd gzip
-              reverse_proxy app:3000
-            }
-            CADDY
-
-            # docker-compose.yml
+            # docker-compose.yml (solo app, sin Caddy)
             cat > docker-compose.yml <<'COMPOSE'
             services:
               app:
                 image: ${DOCR_IMAGE:-registry.digitalocean.com/steven-portfolio-reg/steven-portfolio:latest}
+                container_name: steven-portfolio-app
                 env_file: .env
                 restart: unless-stopped
+                networks:
+                  - infra_infra_network
 
-              caddy:
-                image: caddy:2
-                restart: unless-stopped
-                ports:
-                  - "80:80"
-                  - "443:443"
-                volumes:
-                  - ./Caddyfile:/etc/caddy/Caddyfile:ro
-                  - caddy_data:/data
-                  - caddy_config:/config
-                depends_on:
-                  - app
-
-            volumes:
-              caddy_data:
-              caddy_config:
+            networks:
+              infra_infra_network:
+                external: true
             COMPOSE
 
             # .env (runtime)

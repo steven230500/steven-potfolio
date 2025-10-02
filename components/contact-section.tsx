@@ -20,7 +20,6 @@ const formSchema = z.object({
   email: z.string().email("Email inválido"),
   subject: z.string().min(3, "El asunto es muy corto"),
   message: z.string().min(10, "El mensaje es muy corto"),
-  captchaAnswer: z.string().min(1, "La respuesta es requerida"),
   company: z.string().optional(),
   formStartTime: z.number().optional(),
 });
@@ -28,15 +27,6 @@ type FormValues = z.infer<typeof formSchema>;
 
 
 // Bot protection functions
-function generateSimpleCaptcha(): { question: string; answer: number } {
-  const num1 = Math.floor(Math.random() * 10) + 1;
-  const num2 = Math.floor(Math.random() * 10) + 1;
-  return {
-    question: `¿Cuánto es ${num1} + ${num2}?`,
-    answer: num1 + num2
-  };
-}
-
 function isSubmissionTooFast(startTime: number): boolean {
   const now = Date.now();
   const timeDiff = now - startTime;
@@ -61,7 +51,6 @@ export function ContactSection() {
   const { toast } = useToast();
 
   // Bot protection state - simplified to prevent re-render issues
-  const [captcha] = useState(() => generateSimpleCaptcha());
   const [formStartTime] = useState(() => Date.now());
 
   const form = useForm<FormValues>({
@@ -73,7 +62,6 @@ export function ContactSection() {
       email: "",
       subject: "",
       message: "",
-      captchaAnswer: "",
       company: "",
       formStartTime,
     },
@@ -107,15 +95,6 @@ export function ContactSection() {
       }
 
       // Bot protection checks
-      if (parseInt(values.captchaAnswer) !== captcha.answer) {
-        toast({
-          title: "Error de validación",
-          description: "La respuesta al captcha es incorrecta.",
-          variant: "destructive",
-        });
-        return;
-      }
-
       if (isSubmissionTooFast(values.formStartTime || formStartTime)) {
         toast({
           title: "Envío demasiado rápido",
@@ -309,19 +288,6 @@ export function ContactSection() {
                   {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>}
                 </div>
 
-                <div key={`captcha-${captcha.question}`}>
-                  <label className="block text-sm font-medium mb-2">
-                    {captcha.question}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Tu respuesta"
-                    {...register("captchaAnswer")}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    aria-invalid={!!errors.captchaAnswer}
-                  />
-                  {errors.captchaAnswer && <p className="mt-1 text-xs text-destructive">{errors.captchaAnswer.message}</p>}
-                </div>
 
                 <Button
                   className="w-full"

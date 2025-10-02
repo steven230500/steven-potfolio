@@ -16,7 +16,8 @@ export function FloatingNav() {
     { id: "hero",       label: t.nav.home },
     { id: "about",      label: t.nav.about },
     { id: "skills",     label: t.nav.skills },
-    { id: "experience", label: t.nav.experience }, 
+    { id: "experience", label: t.nav.experience },
+    { id: "projects",   label: t.nav.projects },
     { id: "contact",    label: t.nav.contact },
   ]
 

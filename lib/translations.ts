@@ -35,6 +35,9 @@ export const translations = {
     cloudDevOps: "Cloud & DevOps",
     architecture: "Architecture & Patterns",
 
+    // Projects Section
+    projectsTitle: "Personal Projects",
+
     // Experience Section
     experienceTitle: "Professional Experience",
     projects: "Projects",
@@ -78,6 +81,7 @@ export const translations = {
       about: "About",
       skills: "Skills",
       experience: "Experience",
+      projects: "Projects",
       contact: "Contact",
     },
   },
@@ -116,6 +120,9 @@ export const translations = {
     databases: "Bases de Datos",
     cloudDevOps: "Cloud y DevOps",
     architecture: "Arquitectura y Patrones",
+
+    // Projects Section
+    projectsTitle: "Proyectos Personales",
 
     // Experience Section
     experienceTitle: "Experiencia Profesional",
@@ -160,6 +167,7 @@ export const translations = {
       about: "Acerca",
       skills: "Habilidades",
       experience: "Experiencia",
+      projects: "Proyectos",
       contact: "Contacto",
     },
   },
