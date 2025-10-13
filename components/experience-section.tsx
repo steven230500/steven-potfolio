@@ -23,7 +23,7 @@ export function ExperienceSection() {
       title: "Full Stack Developer",
       company: "FALP",
       location: "Santiago de Chile, Chile",
-      period: `Jan 2023 - ${t.present}`,
+      period: `Jun 2023 - ${t.present}`,
       description: t.falpDesc,
       technologies: ["React Native", "Flutter", "Node.js", "AWS", "Firebase"],
       projects: [
@@ -45,7 +45,7 @@ export function ExperienceSection() {
       title: "Sr. Mobile Developer",
       company: "Tul S.A.S",
       location: "Bogota, Colombia",
-      period: "Jul 2022 - Jan 2023",
+      period: "Jul 2022 - Feb 2023",
       description: t.tulDesc,
       technologies: ["Flutter", "BLoC", "Firebase", "Sentry"],
       projects: [
@@ -56,7 +56,7 @@ export function ExperienceSection() {
       title: "Full Stack Developer",
       company: "Asap507",
       location: "Ciudad de Panamá, Panamá",
-      period: "Jul 2021 - Nov 2022",
+      period: "Jul 2021 - Sep 2022",
       description: t.asapDesc,
       technologies: ["Flutter", "Node.js", "AWS", "Microservices"],
       projects: [
@@ -81,7 +81,7 @@ export function ExperienceSection() {
       title: "Mobile Developer",
       company: "Smartinfo",
       location: "Cartagena, Colombia",
-      period: "Nov 2020 - Mar 2021",
+      period: "Nov 2020 - Feb 2021",
       description: t.smartinfoDesc,
       technologies: ["Flutter", "MobX", "PHP", "Modular"],
       projects: [],

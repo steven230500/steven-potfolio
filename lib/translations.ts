@@ -3,20 +3,20 @@ export const translations = {
     // Hero Section
     title: "Sr. Software Developer",
     description:
-      "Full Stack Developer with 7+ years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js.",
+      "Full Stack Developer with 7 years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js.",
     viewWork: "View My Work",
 
     // About Section
     aboutTitle: "About Me",
     aboutDescription1:
-      "I'm a passionate Full Stack Developer with over 7 years of experience creating innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend tools like Node.js and various databases during this time.",
+      "I'm a passionate Full Stack Developer with 7 years of experience creating innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend tools like Node.js and various databases during this time.",
     aboutDescription2:
       "I specialize in Flutter for mobile development and have solid experience with backend tools like Node.js and various databases. I love sharing what I know with other developers.",
     aboutDescription3:
       "Currently co-founding iHabitar, where I lead web platform development with React and Next.js, building innovative solutions for real estate management and user experience optimization.",
     quickFacts: "Quick Facts",
     experience: "Experience",
-    experienceValue: "7+ years of software development",
+    experienceValue: "7 years of software development",
     education: "Education",
     educationValue: "Systems Engineering",
     specialization: "Specialization",
@@ -89,20 +89,20 @@ export const translations = {
     // Hero Section
     title: "Desarrollador de Software Sr.",
     description:
-      "Desarrollador Full Stack con más de 7 años de experiencia construyendo soluciones móviles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
+      "Desarrollador Full Stack con 7 años de experiencia construyendo soluciones móviles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
     viewWork: "Ver Mi Trabajo",
 
     // About Section
     aboutTitle: "Acerca de Mí",
     aboutDescription1:
-      "Soy un Desarrollador Full Stack apasionado con más de 7 años de experiencia creando soluciones móviles y web innovadoras. Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Node.js y varias bases de datos durante este tiempo.",
+      "Soy un Desarrollador Full Stack apasionado con 7 años de experiencia creando soluciones móviles y web innovadoras. Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Node.js y varias bases de datos durante este tiempo.",
     aboutDescription2:
       "Me especializo en desarrollo móvil con Flutter y tengo experiencia sólida con herramientas backend como Node.js y varias bases de datos. Me encanta compartir lo que sé con otros desarrolladores.",
     aboutDescription3:
       "Actualmente co-fundando iHabitar, donde lidero el desarrollo de plataformas web con React y Next.js, construyendo soluciones innovadoras para gestión inmobiliaria y optimización de experiencia de usuario.",
     quickFacts: "Datos Rápidos",
     experience: "Experiencia",
-    experienceValue: "7+ años de desarrollo de software",
+    experienceValue: "7 años de desarrollo de software",
     education: "Educación",
     educationValue: "Ingeniería de Sistemas",
     specialization: "Especialización",
