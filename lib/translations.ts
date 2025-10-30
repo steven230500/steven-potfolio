@@ -64,13 +64,8 @@ export const translations = {
     contactSubtitle: "Let's Connect",
     contactDescription:
       "I'm always interested in new opportunities and collaborations. Whether you have a project in mind or just want to chat about technology, feel free to reach out!",
-    sendMessage: "Send a Message",
-    firstName: "First Name",
-    lastName: "Last Name",
-    emailAddress: "Email Address",
-    subject: "Subject",
-    yourMessage: "Your message...",
-    sendMessageBtn: "Send Message",
+    whatsappBtn: "Contact via WhatsApp",
+    emailBtn: "Send Email",
 
     // Navigation
     about: "About",
@@ -150,13 +145,8 @@ export const translations = {
     contactSubtitle: "Conectemos",
     contactDescription:
       "Siempre estoy interesado en nuevas oportunidades y colaboraciones. Ya sea que tengas un proyecto en mente o simplemente quieras charlar sobre tecnología, ¡no dudes en contactarme!",
-    sendMessage: "Enviar un Mensaje",
-    firstName: "Nombre",
-    lastName: "Apellido",
-    emailAddress: "Dirección de Email",
-    subject: "Asunto",
-    yourMessage: "Tu mensaje...",
-    sendMessageBtn: "Enviar Mensaje",
+    whatsappBtn: "Contactar por WhatsApp",
+    emailBtn: "Enviar Email",
 
     // Navigation
     about: "Acerca",

@@ -17,10 +17,10 @@ export function SkillsSection() {
   const skillCategories: { titleKey: TitleKey; skills: string[] }[] = [
     { titleKey: "mobileDev",     skills: ["Flutter", "Dart", "React Native", "iOS", "Android"] },
     { titleKey: "frontendTech",  skills: ["React", "Next.js", "TypeScript", "JavaScript", "Vite"] },
-    { titleKey: "backendTech",   skills: ["Node.js", "PHP", "Laravel", "Microservices"] },
+    { titleKey: "backendTech",   skills: ["Node.js", "NestJS", "PHP", "Laravel", "Microservices"] },
     { titleKey: "databases",     skills: ["MongoDB", "PostgreSQL", "Firebase", "Redis"] },
-    { titleKey: "cloudDevOps",   skills: ["AWS", "Firebase", "Lambda", "Rekognition", "CI/CD"] },
-    { titleKey: "architecture",  skills: ["Clean Architecture", "BLoC", "Redux", "MobX", "Modular"] },
+    { titleKey: "cloudDevOps",   skills: ["AWS", "Digital Ocean", "Vercel", "Firebase", "Lambda", "Rekognition", "CI/CD"] },
+    { titleKey: "architecture",  skills: ["Clean Architecture", "BLoC", "Redux", "MobX", "Modular", "CQRS", "Event Sourcing", "Domain Driven Design"] },
   ]
 
   return (

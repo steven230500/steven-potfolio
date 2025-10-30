@@ -17,17 +17,17 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5" />
 
       {/* Shapes decorativas: no bloquean clics */}
-      <div className="pointer-events-none hidden md:block absolute top-20 left-10 w-20 h-20 bg-accent/20 rounded-full animate-float" />
+      <div className="pointer-events-none absolute top-20 left-10 w-20 h-20 bg-accent/20 rounded-full animate-float" />
       <div
-        className="pointer-events-none hidden lg:block absolute top-40 right-20 w-16 h-16 bg-secondary/20 rounded-lg rotate-45 animate-float"
+        className="pointer-events-none absolute top-40 right-20 w-16 h-16 bg-secondary/20 rounded-lg rotate-45 animate-float"
         style={{ animationDelay: "1s" }}
       />
       <div
-        className="pointer-events-none hidden md:block absolute bottom-40 left-20 w-12 h-12 bg-primary/20 rounded-full animate-float"
+        className="pointer-events-none absolute bottom-40 left-20 w-12 h-12 bg-primary/20 rounded-full animate-float"
         style={{ animationDelay: "2s" }}
       />
       <div
-        className="pointer-events-none hidden lg:block absolute bottom-20 right-10 w-24 h-24 bg-accent/10 rounded-lg animate-float"
+        className="pointer-events-none absolute bottom-20 right-10 w-24 h-24 bg-accent/10 rounded-lg animate-float"
         style={{ animationDelay: "0.5s" }}
       />
 
