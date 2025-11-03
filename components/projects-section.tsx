@@ -12,6 +12,14 @@ export function ProjectsSection() {
 
   const projects = [
     {
+      title: "What to do Cartagena",
+      description: "Guía interactiva completa para descubrir qué hacer en Cartagena de Indias. Incluye mapa interactivo, eventos locales, comercios, rutas turísticas y gamificación.",
+      image: "/placeholder-logo.png",
+      url: "https://whattodocartagena.com/",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Leaflet", "React Leaflet"],
+      category: "Web Development"
+    },
+    {
       title: "Grupo La Fe Cartagena",
       description: "Aplicación web para organización de apoyo para la recuperación de la ludopatía. Desarrollada con Next.js, TypeScript y Tailwind CSS.",
       image: "/grupo-la-fe-logo.png",
