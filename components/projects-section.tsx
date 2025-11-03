@@ -14,7 +14,7 @@ export function ProjectsSection() {
     {
       title: "What to do Cartagena",
       description: "Guía interactiva completa para descubrir qué hacer en Cartagena de Indias. Incluye mapa interactivo, eventos locales, comercios, rutas turísticas y gamificación.",
-      image: "/placeholder-logo.png",
+      image: "/cartagena-unesco-world-heritage-historic-center.jpg",
       url: "https://whattodocartagena.com/",
       technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Leaflet", "React Leaflet"],
       category: "Web Development"
