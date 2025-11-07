@@ -43,7 +43,7 @@ export const translations = {
     projects: "Projects",
     present: "Present",
     iHabitarDesc:
-      "Co-founded iHabitar, leading web platform development with React and Next.js. Built and maintained cross-platform mobile apps using Flutter. Designed and implemented user interfaces for real-time access control and amenity reservations.",
+      "Co-founded iHabitar as a parallel initiative, leading web platform development with React and Next.js. Built and maintained cross-platform mobile apps using Flutter. Designed and implemented user interfaces for real-time access control and amenity reservations.",
     falpDesc:
       "Developed and maintained cross-platform mobile apps using React Native and Flutter. Built Mi FALP (medical services platform) and EduCancer (interactive cancer education app). Integrated AWS (Lambda, Rekognition) and Firebase for cloud functionality.",
     dd360Desc:
@@ -124,7 +124,7 @@ export const translations = {
     projects: "Proyectos",
     present: "Presente",
     iHabitarDesc:
-      "Co-fundé iHabitar, liderando el desarrollo de plataformas web con React y Next.js. Construí y mantuve aplicaciones móviles multiplataforma usando Flutter. Diseñé e implementé interfaces de usuario para control de acceso en tiempo real y reservas de amenidades.",
+      "Co-fundé iHabitar como iniciativa paralela, liderando el desarrollo de plataformas web con React y Next.js. Construí y mantuve aplicaciones móviles multiplataforma usando Flutter. Diseñé e implementé interfaces de usuario para control de acceso en tiempo real y reservas de amenidades.",
     falpDesc:
       "Desarrollé y mantuve aplicaciones móviles multiplataforma usando React Native y Flutter. Construí Mi FALP (plataforma de servicios médicos) y EduCancer (aplicación interactiva de educación sobre cáncer). Integré AWS (Lambda, Rekognition) y Firebase para funcionalidad en la nube.",
     dd360Desc:
