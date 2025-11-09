@@ -14,7 +14,7 @@ export function ExperienceSection() {
       title: "Full Stack Developer",
       company: "FALP",
       location: "Santiago de Chile, Chile",
-      period: `Jun 2023 - ${t.present}`,
+      period: "Jun 2023 - Nov 2025",
       description: t.falpDesc,
       technologies: ["React Native", "Flutter", "Node.js", "AWS", "Firebase"],
       projects: [
