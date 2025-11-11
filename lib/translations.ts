@@ -84,13 +84,13 @@ export const translations = {
     // Hero Section
     title: "Desarrollador de Software Sr.",
     description:
-      "Desarrollador Full Stack con 7 años de experiencia construyendo soluciones móviles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
+      "Desarrollador Full Stack con 7 años de experiencia construyendo soluciones mobiles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
     viewWork: "Ver Mi Trabajo",
 
     // About Section
     aboutTitle: "Acerca de Mí",
     aboutDescription1:
-      "Soy un Desarrollador Full Stack apasionado con 7 años de experiencia construyendo soluciones móviles y web innovadoras. Me especializo en Flutter para desarrollo móvil y tengo experiencia sólida con tecnologías backend como Node.js y varias bases de datos.",
+      "Soy un Desarrollador Full Stack apasionado con 7 años de experiencia construyendo soluciones mobiles y web innovadoras. Me especializo en Flutter para desarrollo móvil y tengo experiencia sólida con tecnologías backend como Node.js y varias bases de datos.",
     aboutDescription2:
       "Disfruto compartiendo mi conocimiento con otros desarrolladores y contribuyendo a proyectos colaborativos.",
     aboutDescription3:
@@ -124,21 +124,21 @@ export const translations = {
     projects: "Proyectos",
     present: "Presente",
     iHabitarDesc:
-      "Co-fundé iHabitar como iniciativa paralela, liderando el desarrollo de plataformas web con React y Next.js. Construí y mantuve aplicaciones móviles multiplataforma usando Flutter. Diseñé e implementé interfaces de usuario para control de acceso en tiempo real y reservas de amenidades.",
+      "Co-fundé iHabitar como iniciativa paralela, liderando el desarrollo de plataformas web con React y Next.js. Construí y mantuve aplicaciones mobiles multiplataforma usando Flutter. Diseñé e implementé interfaces de usuario para control de acceso en tiempo real y reservas de amenidades.",
     falpDesc:
-      "Desarrollé y mantuve aplicaciones móviles multiplataforma usando React Native y Flutter. Construí Mi FALP (plataforma de servicios médicos) y EduCancer (aplicación interactiva de educación sobre cáncer). Integré AWS (Lambda, Rekognition) y Firebase para funcionalidad en la nube.",
+      "Desarrollé y mantuve aplicaciones mobiles multiplataforma usando React Native y Flutter. Construí Mi FALP (plataforma de servicios médicos) y EduCancer (aplicación interactiva de educación sobre cáncer). Integré AWS (Lambda, Rekognition) y Firebase para funcionalidad en la nube.",
     dd360Desc:
       "Lideré el desarrollo de la aplicación Monopoly con Flutter, enfocándome en arquitectura limpia y patrones BLoC avanzados. Integré Unity para gráficos 3D, asegurando visuales de alta calidad. Mejoré la funcionalidad de la aplicación usando librerías Dartz, Dio, Modular.",
     tulDesc:
       "Desarrollé nuevas características y módulos para la aplicación móvil TUL Backoffice usando Flutter y BLoC. Mejoré la estabilidad de la aplicación con DartZ para manejo de errores y excepciones. Integré Firebase y Sentry para análisis y seguimiento de errores.",
     asapDesc:
-      "Construí aplicaciones móviles ASAP Customer & Merchant con Flutter, Arquitectura Limpia y Cubit. Diseñé backend escalable de microservicios con Node.js. Integré AWS para procesamiento de imágenes sin servidor y notificaciones.",
+      "Construí aplicaciones mobiles ASAP Customer & Merchant con Flutter, Arquitectura Limpia y Cubit. Diseñé backend escalable de microservicios con Node.js. Integré AWS para procesamiento de imágenes sin servidor y notificaciones.",
     casaToroDesc:
       "Desarrollé la aplicación Bellpi para gestión de vehículos, reserva de citas y servicios. Usé React Native con Redux para gestión de estado. Integré características de pago y programación para usuarios finales.",
     smartinfoDesc:
       "Desarrollé aplicación móvil en Flutter (usando Modular, MobX) para distribución de productos. Construí plataforma web PHP para gestión de productos y logística. Optimicé flujos de trabajo de distribución para productos de consumo masivo e institucionales.",
     guidoulloaDesc:
-      "Desarrollé aplicaciones web y móviles (Flutter, Laravel/PHP, React Native). Construí sistemas backend para gestión de citas médicas con Node.js/MongoDB. Entregué plataformas web comunitarias (El Getsemanicense) para impacto social.",
+      "Desarrollé aplicaciones web y mobiles (Flutter, Laravel/PHP, React Native). Construí sistemas backend para gestión de citas médicas con Node.js/MongoDB. Entregué plataformas web comunitarias (El Getsemanicense) para impacto social.",
 
     // Contact Section
     contactTitle: "Ponte en Contacto",
