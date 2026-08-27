@@ -36,7 +36,7 @@ export const translations = {
     architecture: "Architecture & Patterns",
 
     // Projects Section
-    projectsTitle: "Personal Projects",
+    projectsTitle: "Selected Work",
 
     // Experience Section
     experienceTitle: "Professional Experience",
@@ -117,7 +117,7 @@ export const translations = {
     architecture: "Arquitectura y Patrones",
 
     // Projects Section
-    projectsTitle: "Proyectos Personales",
+    projectsTitle: "Trabajo Seleccionado",
 
     // Experience Section
     experienceTitle: "Experiencia Profesional",

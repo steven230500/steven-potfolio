@@ -1,9 +1,7 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { useLanguage } from "@/lib/language-context"
-import { translations } from "@/lib/translations" 
+import { translations } from "@/lib/translations"
 
 type T = typeof translations.en
 type StringKeys<TObj> = {
@@ -19,31 +17,34 @@ export function SkillsSection() {
     { titleKey: "frontendTech",  skills: ["React", "Next.js", "TypeScript", "JavaScript", "Vite"] },
     { titleKey: "backendTech",   skills: ["Node.js", "NestJS", "PHP", "Laravel", "Microservices"] },
     { titleKey: "databases",     skills: ["MongoDB", "PostgreSQL", "Firebase", "Redis"] },
-    { titleKey: "cloudDevOps",   skills: ["AWS", "Digital Ocean", "Vercel", "Firebase", "Lambda", "Rekognition", "CI/CD"] },
-    { titleKey: "architecture",  skills: ["Clean Architecture", "BLoC", "Redux", "MobX", "Modular", "CQRS", "Event Sourcing", "Domain Driven Design"] },
+    { titleKey: "cloudDevOps",   skills: ["AWS", "Digital Ocean", "Vercel", "Docker", "Caddy", "CI/CD"] },
+    { titleKey: "architecture",  skills: ["Clean Architecture", "BLoC", "Redux", "MobX", "CQRS", "DDD"] },
   ]
 
   return (
-    <section id="skills" className="py-20 px-4 bg-muted scroll-mt-28 md:scroll-mt-40">
+    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 scroll-mt-14 border-t border-border">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t.skillsTitle}</h2>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-10">
+          02 · {t.skillsTitle}
+        </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((category, index) => (
-            <Card key={index} className="bg-background">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4 text-accent">
-                  {t[category.titleKey]}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill, skillIndex) => (
-                    <Badge key={skillIndex} variant="secondary" className="text-sm">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border rounded-lg overflow-hidden border border-border">
+          {skillCategories.map((category) => (
+            <div key={category.titleKey} className="bg-background p-6">
+              <h3 className="font-mono text-xs uppercase tracking-wider text-muted-foreground mb-4">
+                {t[category.titleKey]}
+              </h3>
+              <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm text-foreground">
+                {category.skills.map((skill, i) => (
+                  <span key={skill} className="flex items-center gap-2">
+                    {skill}
+                    {i < category.skills.length - 1 && (
+                      <span className="text-muted-foreground">·</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>

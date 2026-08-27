@@ -4,14 +4,12 @@ import { SkillsSection } from "@/components/skills-section"
 import { ExperienceSection } from "@/components/experience-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
-import { LanguageToggle } from "@/components/language-toggle"
 import { FloatingNav } from "@/components/floating-nav"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-accent/10">
+    <main className="min-h-screen bg-background">
       <FloatingNav />
-      <LanguageToggle />
       <HeroSection />
       <AboutSection />
       <SkillsSection />

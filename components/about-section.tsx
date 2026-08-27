@@ -1,53 +1,45 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
 import { useLanguage } from "@/lib/language-context"
 
 export function AboutSection() {
   const { t } = useLanguage()
 
+  const facts: [string, string][] = [
+    [t.experience, t.experienceValue],
+    [t.education, "Systems Engineer"],
+    [t.specialization, t.specializationValue],
+    [t.currentRole, t.currentRoleValue],
+    [t.location, t.locationValue],
+  ]
+
   return (
-    <section id="about" className="py-20 px-4 bg-background scroll-mt-28 md:scroll-mt-40">
-
+    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 scroll-mt-14">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t.aboutTitle}</h2>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-3">
+          01 · {t.aboutTitle}
+        </p>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-6">
-            <p className="text-lg leading-relaxed text-pretty">{t.aboutDescription1}</p>
-
-            <p className="text-lg leading-relaxed text-pretty">{t.aboutDescription2}</p>
-
-            <p className="text-lg leading-relaxed text-pretty">{t.aboutDescription3}</p>
+        <div className="grid md:grid-cols-[1.2fr_0.8fr] gap-10 lg:gap-16">
+          <div className="space-y-5 border-l-2 border-border pl-6">
+            <p className="text-lg leading-relaxed text-pretty text-foreground">{t.aboutDescription1}</p>
+            <p className="text-lg leading-relaxed text-pretty text-muted-foreground">{t.aboutDescription2}</p>
+            <p className="text-lg leading-relaxed text-pretty text-muted-foreground">{t.aboutDescription3}</p>
           </div>
 
-          <Card className="bg-muted">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">{t.quickFacts}</h3>
-              <ul className="space-y-3">
-                <li className="flex justify-between">
-                  <span className="font-medium">{t.experience}:</span>
-                  <span>{t.experienceValue}</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium">{t.education}:</span>
-                  <span>Systems Engineer</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium">{t.specialization}:</span>
-                  <span>{t.specializationValue}</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium">{t.currentRole}:</span>
-                  <span>{t.currentRoleValue}</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium">{t.location}:</span>
-                  <span>{t.locationValue}</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="rounded-lg border border-border bg-card font-mono text-sm overflow-hidden self-start">
+            <div className="px-4 py-3 border-b border-border text-xs uppercase tracking-wider text-muted-foreground">
+              {t.quickFacts}
+            </div>
+            <dl className="divide-y divide-border">
+              {facts.map(([label, value]) => (
+                <div key={label} className="flex items-baseline justify-between gap-4 px-4 py-3">
+                  <dt className="text-muted-foreground shrink-0">{label}</dt>
+                  <dd className="text-foreground text-right">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </div>
     </section>

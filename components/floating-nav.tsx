@@ -9,7 +9,8 @@ import { scrollToId } from "@/lib/utils"
 export function FloatingNav() {
   const [activeSection, setActiveSection] = useState("hero")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { language } = useLanguage()
+  const [scrolled, setScrolled] = useState(false)
+  const { language, setLanguage } = useLanguage()
   const t = translations[language]
 
   const navItems = [
@@ -22,6 +23,13 @@ export function FloatingNav() {
   ]
 
   const ratioMapRef = useRef<Map<string, number>>(new Map())
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   useEffect(() => {
     const sections = navItems
@@ -48,7 +56,6 @@ export function FloatingNav() {
           }
         })
 
-        // Fllback: si estamos al fondo de la página, fija "contact"
         if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
           bestId = "contact"
         }
@@ -72,55 +79,78 @@ export function FloatingNav() {
   }
 
   return (
-    <>
-      <nav className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-50 bg-card/80 backdrop-blur-md border border-border rounded-full px-6 py-3 shadow-lg animate-slide-in-up">
-        <ul className="flex space-x-6">
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <button
-                onClick={() => handleGo(item.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeSection === item.id
-                    ? "bg-primary text-primary-foreground shadow-md"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
-              >
-                {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <div className="md:hidden fixed top-4 left-4 z-50">
+    <header
+      className={`fixed top-0 inset-x-0 z-50 border-b transition-colors duration-300 ${
+        scrolled ? "bg-background border-border" : "bg-background/0 border-transparent"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
         <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="bg-card/80 backdrop-blur-md border border-border rounded-full p-3 shadow-lg"
+          onClick={() => handleGo("hero")}
+          className="font-mono text-sm text-foreground tracking-tight"
+          aria-label="Home"
         >
-          {isMobileMenuOpen ? <X className="w-5 h-5 text-foreground" /> : <Menu className="w-5 h-5 text-foreground" />}
+          <span className="text-accent">~/</span>steven-patino
         </button>
 
-        {isMobileMenuOpen && (
-          <div className="absolute top-16 left-0 bg-card/95 backdrop-blur-md border border-border rounded-2xl p-4 shadow-xl min-w-[200px]">
-            <ul className="space-y-2">
-              {navItems.map((item) => (
-                <li key={item.id}>
-                  <button
-                    onClick={() => handleGo(item.id)}
-                    className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
-                      activeSection === item.id
-                        ? "bg-primary text-primary-foreground shadow-md"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <nav className="hidden md:flex items-center gap-1">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleGo(item.id)}
+              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
+                activeSection === item.id
+                  ? "text-accent"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+          <span className="mx-2 h-4 w-px bg-border" aria-hidden />
+          <button
+            onClick={() => setLanguage(language === "en" ? "es" : "en")}
+            className="px-2 py-1.5 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+          >
+            {language === "en" ? "ES" : "EN"}
+          </button>
+        </nav>
+
+        <div className="md:hidden flex items-center gap-3">
+          <button
+            onClick={() => setLanguage(language === "en" ? "es" : "en")}
+            className="font-mono text-xs uppercase tracking-wider text-muted-foreground"
+          >
+            {language === "en" ? "ES" : "EN"}
+          </button>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Menu"
+            className="text-foreground p-1"
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
-    </>
+
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-border bg-background px-4 py-3">
+          <ul className="space-y-1">
+            {navItems.map((item) => (
+              <li key={item.id}>
+                <button
+                  onClick={() => handleGo(item.id)}
+                  className={`w-full text-left px-2 py-2 font-mono text-xs uppercase tracking-wider ${
+                    activeSection === item.id ? "text-accent" : "text-muted-foreground"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </header>
   )
 }
