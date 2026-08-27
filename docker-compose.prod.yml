@@ -1,0 +1,12 @@
+services:
+  app:
+    image: ghcr.io/steven230500/steven-portfolio:latest
+    container_name: steven-portfolio-app
+    env_file: .env
+    restart: unless-stopped
+    networks:
+      - infra_infra_network
+
+networks:
+  infra_infra_network:
+    external: true

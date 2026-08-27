@@ -1,62 +1,34 @@
-name: Deploy to DigitalOcean
+name: deploy
 
 on:
-  push:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["docker-publish"]
+    types: [completed]
+    branches: [main]
 
-env:
-  REGISTRY: registry.digitalocean.com
-  IMAGE_NAME: steven-portfolio
+permissions:
+  contents: read
 
 jobs:
-  build-and-deploy:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set DOCR repo
-        id: meta
-        run: |
-          echo "docr=${{ env.REGISTRY }}/${{ secrets.DOCR_REGISTRY }}/${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
-
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DO_TOKEN }}
-
-      - name: Login to DOCR
-        run: doctl registry login
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build & Push image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64
-          build-args: |
-            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
-          tags: |
-            ${{ steps.meta.outputs.docr }}:latest
-            ${{ steps.meta.outputs.docr }}:${{ github.sha }}
-
-      - name: Deploy remoto (escribe archivos y levanta)
+      - name: SSH into droplet and deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script_stop: true
           script: |
-            set -e
+            set -euo pipefail
 
-            # Instalar Docker si falta
-            docker --version || curl -fsSL https://get.docker.com | sh
-
-            # Asegurar "docker compose" o "docker-compose"
+            # Docker / Compose check
+            if ! command -v docker >/dev/null 2>&1; then
+              curl -fsSL https://get.docker.com | sh
+            fi
             if docker compose version >/dev/null 2>&1; then
               COMPOSE="docker compose"
             else
@@ -65,41 +37,30 @@ jobs:
               COMPOSE="docker-compose"
             fi
 
-            # Carpeta de deploy
-            mkdir -p ${{ secrets.SERVER_PATH }}
-            cd ${{ secrets.SERVER_PATH }}
+            # External network for the shared Caddy proxy
+            docker network inspect infra_infra_network >/dev/null 2>&1 || docker network create infra_infra_network
 
-            # docker-compose.yml (solo app, sin Caddy)
-            cat > docker-compose.yml <<'COMPOSE'
-            services:
-              app:
-                image: ${DOCR_IMAGE:-registry.digitalocean.com/steven-portfolio-reg/steven-portfolio:latest}
-                container_name: steven-portfolio-app
-                env_file: .env
-                restart: unless-stopped
-                networks:
-                  - infra_infra_network
+            # Deployment app folder
+            SERVER_PATH="${{ secrets.SERVER_PATH }}"
+            mkdir -p "$SERVER_PATH"
+            cd "$SERVER_PATH"
 
-            networks:
-              infra_infra_network:
-                external: true
-            COMPOSE
+            # Pull compose file from repo directly
+            rm -rf temp_repo
+            git clone https://github.com/steven230500/steven-potfolio.git temp_repo
+            cp temp_repo/docker-compose.prod.yml docker-compose.yml
+            rm -rf temp_repo
 
-            # .env (runtime)
-            cat > .env <<'ENVVARS'
-            RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
-            CONTACT_TO=${{ secrets.CONTACT_TO }}
-            CONTACT_FROM=${{ secrets.CONTACT_FROM }}
-            RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
-            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
-            ENVVARS
+            # Runtime secrets - written as a single printf, not a heredoc.
+            # appleboy/ssh-action wraps every line of this script with its own
+            # exit-code tracking (for script_stop), which can corrupt multi-line
+            # heredoc bodies by injecting garbage between each line.
+            printf 'RESEND_API_KEY=%s\nCONTACT_TO=%s\nCONTACT_FROM=%s\nRECAPTCHA_SECRET_KEY=%s\nNEXT_PUBLIC_RECAPTCHA_SITE_KEY=%s\n' "${{ secrets.RESEND_API_KEY }}" "${{ secrets.CONTACT_TO }}" "${{ secrets.CONTACT_FROM }}" "${{ secrets.RECAPTCHA_SECRET_KEY }}" "${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" > .env
 
-            # Login al registry y levantar
-            echo "${{ secrets.DO_TOKEN }}" | docker login registry.digitalocean.com -u doctl --password-stdin
-            export DOCR_IMAGE=${{ env.REGISTRY }}/${{ secrets.DOCR_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
+            # Pull & Up
             $COMPOSE pull
             $COMPOSE up -d --remove-orphans
 
-            echo "=== Archivos ==="; ls -la
-            echo "=== Estado ==="; $COMPOSE ps
+            echo "=== Estado ==="
+            $COMPOSE ps
+            echo "Deployment to $SERVER_PATH completed successfully"
