@@ -82,7 +82,7 @@ export function HeroSection() {
               <p className="text-muted-foreground pt-2">
                 <span className="text-accent">$</span> cat experience.txt
               </p>
-              <p className="text-foreground pl-3">7+ años · mobile, web & backend</p>
+              <p className="text-foreground pl-3">8+ años · mobile, web & backend</p>
               <p className="text-foreground pl-3">Co-Founder @ iHabitar</p>
 
               <p className="text-muted-foreground pt-2">
