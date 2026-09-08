@@ -3,20 +3,20 @@ export const translations = {
     // Hero Section
     title: "Sr. Software Developer",
     description:
-      "Full Stack Developer with 7 years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js.",
+      "Full Stack Developer with 8+ years of experience building mobile, web, and backend solutions. Specialist in Flutter, React, Next.js, and Node.js.",
     viewWork: "View My Work",
 
     // About Section
     aboutTitle: "About Me",
     aboutDescription1:
-      "I'm a passionate Full Stack Developer with 7 years of experience building innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend technologies like Node.js and various databases.",
+      "I'm a passionate Full Stack Developer with 8+ years of experience building innovative mobile and web solutions. I specialize in Flutter for mobile development and have solid experience with backend technologies like Node.js and various databases.",
     aboutDescription2:
       "I enjoy sharing my knowledge with other developers and contributing to collaborative projects.",
     aboutDescription3:
       "Currently, I'm co-founding iHabitar, where I lead the development of the web platform using React and Next.js, creating innovative solutions for real estate management and optimizing user experiences.",
     quickFacts: "Quick Facts",
     experience: "Experience",
-    experienceValue: "7 years of software development",
+    experienceValue: "8+ years of software development",
     education: "Education",
     educationValue: "Systems Engineering",
     specialization: "Specialization",
@@ -45,7 +45,7 @@ export const translations = {
     iHabitarDesc:
       "Co-founded iHabitar as a parallel initiative, leading web platform development with React and Next.js. Built and maintained cross-platform mobile apps using Flutter. Designed and implemented user interfaces for real-time access control and amenity reservations.",
     falpDesc:
-      "Developed and maintained cross-platform mobile apps using React Native and Flutter. Built Mi FALP (medical services platform) and EduCancer (interactive cancer education app). Integrated AWS (Lambda, Rekognition) and Firebase for cloud functionality.",
+      "Develop and maintain cross-platform mobile apps using React Native and Flutter. Built Mi FALP (medical services platform) and EduCancer (interactive cancer education app). Integrated AWS (Lambda, Rekognition) and Firebase for cloud functionality.",
     dd360Desc:
       "Led development of Monopoly app with Flutter, focusing on clean architecture and advanced BLoC patterns. Integrated Unity for 3D graphics, ensuring high-quality visuals. Enhanced app functionality using Dartz, Dio, Modular libraries.",
     tulDesc:
@@ -84,20 +84,20 @@ export const translations = {
     // Hero Section
     title: "Desarrollador de Software Sr.",
     description:
-      "Desarrollador Full Stack con 7 años de experiencia construyendo soluciones mobiles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
+      "Desarrollador Full Stack con 8+ años de experiencia construyendo soluciones mobiles, web y backend. Especialista en Flutter, React, Next.js y Node.js.",
     viewWork: "Ver Mi Trabajo",
 
     // About Section
     aboutTitle: "Acerca de Mí",
     aboutDescription1:
-      "Soy un Desarrollador Full Stack apasionado con 7 años de experiencia construyendo soluciones mobiles y web innovadoras. Me especializo en Flutter para desarrollo móvil y tengo experiencia sólida con tecnologías backend como Node.js y varias bases de datos.",
+      "Soy un Desarrollador Full Stack apasionado con 8+ años de experiencia construyendo soluciones mobiles y web innovadoras. Me especializo en Flutter para desarrollo móvil y tengo experiencia sólida con tecnologías backend como Node.js y varias bases de datos.",
     aboutDescription2:
       "Disfruto compartiendo mi conocimiento con otros desarrolladores y contribuyendo a proyectos colaborativos.",
     aboutDescription3:
       "Actualmente, estoy co-fundando iHabitar, donde lidero el desarrollo de la plataforma web usando React y Next.js, creando soluciones innovadoras para gestión inmobiliaria y optimizando experiencias de usuario.",
     quickFacts: "Datos Rápidos",
     experience: "Experiencia",
-    experienceValue: "7 años de desarrollo de software",
+    experienceValue: "8+ años de desarrollo de software",
     education: "Educación",
     educationValue: "Ingeniería de Sistemas",
     specialization: "Especialización",
@@ -126,7 +126,7 @@ export const translations = {
     iHabitarDesc:
       "Co-fundé iHabitar como iniciativa paralela, liderando el desarrollo de plataformas web con React y Next.js. Construí y mantuve aplicaciones mobiles multiplataforma usando Flutter. Diseñé e implementé interfaces de usuario para control de acceso en tiempo real y reservas de amenidades.",
     falpDesc:
-      "Desarrollé y mantuve aplicaciones mobiles multiplataforma usando React Native y Flutter. Construí Mi FALP (plataforma de servicios médicos) y EduCancer (aplicación interactiva de educación sobre cáncer). Integré AWS (Lambda, Rekognition) y Firebase para funcionalidad en la nube.",
+      "Desarrollo y mantengo aplicaciones mobiles multiplataforma usando React Native y Flutter. Construí Mi FALP (plataforma de servicios médicos) y EduCancer (aplicación interactiva de educación sobre cáncer). Integré AWS (Lambda, Rekognition) y Firebase para funcionalidad en la nube.",
     dd360Desc:
       "Lideré el desarrollo de la aplicación Monopoly con Flutter, enfocándome en arquitectura limpia y patrones BLoC avanzados. Integré Unity para gráficos 3D, asegurando visuales de alta calidad. Mejoré la funcionalidad de la aplicación usando librerías Dartz, Dio, Modular.",
     tulDesc:
