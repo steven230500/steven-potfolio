@@ -49,10 +49,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: SITE_URL,
-    languages: {
-      en: SITE_URL,
-      es: SITE_URL,
-    },
   },
   openGraph: {
     type: "website",
@@ -112,7 +108,6 @@ export default function RootLayout({
               },
               email: "steven230500@outlook.com",
               telephone: "+57 3022908439",
-              birthDate: "2000-05-23",
               nationality: "Colombian",
               alumniOf: {
                 "@type": "EducationalOrganization",

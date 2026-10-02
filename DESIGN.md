@@ -11,7 +11,7 @@ Referencias (proyectos propios, no plantillas de terceros):
 - reformaripsfundacion.co — salud, migrado a export estático + API en PHP por hosting FTP
 - grupolafecartagena.org — grupo de apoyo anónimo, sin fotos de personas por diseño
 
-Anti-referencias: v0/Lovable template default — Inter, gradiente morado→cian, hero centrado, blobs flotando, 3 tarjetas redondeadas idénticas, glassmorphism, iconos en círculos de acento.
+Anti-referencias: plantilla genérica — Inter, gradiente morado→cian, hero centrado, blobs flotando, 3 tarjetas redondeadas idénticas, glassmorphism, iconos en círculos de acento.
 
 ## Color
 ```
