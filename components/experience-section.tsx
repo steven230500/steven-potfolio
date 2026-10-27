@@ -11,7 +11,7 @@ export function ExperienceSection() {
       title: "Full Stack Developer",
       company: "FALP",
       location: "Santiago de Chile, Chile",
-      period: `Jun 2023 – ${t.present}`,
+      period: "Jun 2023 – Oct 2026",
       description: t.falpDesc,
       technologies: ["React Native", "Flutter", "Node.js", "AWS", "Firebase"],
       projects: [
@@ -19,15 +19,6 @@ export function ExperienceSection() {
         { name: "Mi FALP (iOS)", url: "https://apps.apple.com/cl/app/mi-falp/id6460034866" },
         { name: "EduCancer", url: "https://play.google.com/store/apps/details?id=com.educancer&hl=es_CO" },
       ],
-    },
-    {
-      title: "Co-Founder & Full Stack Developer",
-      company: "iHabitar",
-      location: "Cartagena, Colombia",
-      period: `Oct 2024 – ${t.present}`,
-      description: t.iHabitarDesc,
-      technologies: ["React", "Next.js", "Flutter", "TypeScript"],
-      projects: [{ name: "iHabitar Platform", url: "https://ihabitar.com/" }],
     },
     {
       title: "Sr. Mobile Developer",

@@ -17,6 +17,17 @@ type FeaturedProject = {
 
 const featured: FeaturedProject[] = [
   {
+    name: "iHabitar",
+    domain: "ihabitar.com",
+    url: "https://ihabitar.com/",
+    industry: { en: "Proptech · Residential management", es: "Proptech · Gestión residencial" },
+    blurb: {
+      en: "Residential management platform built end to end: the web platform in React/Next.js and the iHabitar and iHabitar Staff mobile apps in Flutter, live on the App Store and Google Play, for amenity booking, access control and community communication.",
+      es: "Plataforma de gestión residencial construida de punta a punta: la plataforma web en React/Next.js y las apps móviles iHabitar e iHabitar Staff en Flutter, publicadas en App Store y Google Play, para reservas de zonas comunes, control de acceso y comunicación con la comunidad.",
+    },
+    stack: ["Next.js", "React", "Flutter", "TypeScript"],
+  },
+  {
     name: "Bocan Contracting",
     domain: "bocancontracting.ca",
     url: "https://www.bocancontracting.ca/",

@@ -21,8 +21,8 @@ export const translations = {
     educationValue: "Systems Engineering",
     specialization: "Specialization",
     specializationValue: "Full Stack Developer",
-    currentRole: "Current Role",
-    currentRoleValue: "Co-Founder at iHabitar",
+    currentRole: "Availability",
+    currentRoleValue: "Open to remote roles",
     location: "Location",
     locationValue: "Cartagena, Colombia",
 
@@ -42,10 +42,8 @@ export const translations = {
     experienceTitle: "Professional Experience",
     projects: "Projects",
     present: "Present",
-    iHabitarDesc:
-      "Co-founded iHabitar as a parallel initiative, leading web platform development with React and Next.js. Built and maintained cross-platform mobile apps using Flutter. Designed and implemented user interfaces for real-time access control and amenity reservations.",
     falpDesc:
-      "Develop and maintain cross-platform mobile apps using React Native and Flutter. Built Mi FALP (medical services platform) and EduCancer (interactive cancer education app). Integrated AWS (Lambda, Rekognition) and Firebase for cloud functionality.",
+      "Developed and maintained cross-platform mobile apps using React Native and Flutter. Built Mi FALP (medical services platform) and EduCancer (interactive cancer education app). Integrated AWS (Lambda, Rekognition) and Firebase for cloud functionality.",
     dd360Desc:
       "Led development of Monopoly app with Flutter, focusing on clean architecture and advanced BLoC patterns. Integrated Unity for 3D graphics, ensuring high-quality visuals. Enhanced app functionality using Dartz, Dio, Modular libraries.",
     tulDesc:
@@ -102,8 +100,8 @@ export const translations = {
     educationValue: "Ingeniería de Sistemas",
     specialization: "Especialización",
     specializationValue: "Desarrollador Full Stack",
-    currentRole: "Rol Actual",
-    currentRoleValue: "Co-Fundador en iHabitar",
+    currentRole: "Disponibilidad",
+    currentRoleValue: "Abierto a roles remotos",
     location: "Ubicación",
     locationValue: "Cartagena, Colombia",
 
@@ -123,10 +121,8 @@ export const translations = {
     experienceTitle: "Experiencia Profesional",
     projects: "Proyectos",
     present: "Presente",
-    iHabitarDesc:
-      "Co-fundé iHabitar como iniciativa paralela, liderando el desarrollo de plataformas web con React y Next.js. Construí y mantuve aplicaciones mobiles multiplataforma usando Flutter. Diseñé e implementé interfaces de usuario para control de acceso en tiempo real y reservas de amenidades.",
     falpDesc:
-      "Desarrollo y mantengo aplicaciones mobiles multiplataforma usando React Native y Flutter. Construí Mi FALP (plataforma de servicios médicos) y EduCancer (aplicación interactiva de educación sobre cáncer). Integré AWS (Lambda, Rekognition) y Firebase para funcionalidad en la nube.",
+      "Desarrollé y mantuve aplicaciones móviles multiplataforma usando React Native y Flutter. Construí Mi FALP (plataforma de servicios médicos) y EduCancer (aplicación interactiva de educación sobre cáncer). Integré AWS (Lambda, Rekognition) y Firebase para funcionalidad en la nube.",
     dd360Desc:
       "Lideré el desarrollo de la aplicación Monopoly con Flutter, enfocándome en arquitectura limpia y patrones BLoC avanzados. Integré Unity para gráficos 3D, asegurando visuales de alta calidad. Mejoré la funcionalidad de la aplicación usando librerías Dartz, Dio, Modular.",
     tulDesc:
