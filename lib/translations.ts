@@ -13,7 +13,7 @@ export const translations = {
     aboutDescription2:
       "I enjoy sharing my knowledge with other developers and contributing to collaborative projects.",
     aboutDescription3:
-      "Currently, I'm co-founding iHabitar, where I lead the development of the web platform using React and Next.js, creating innovative solutions for real estate management and optimizing user experiences.",
+      "I co-founded iHabitar, a side project for residential property management where I develop the web platform with React and Next.js.",
     quickFacts: "Quick Facts",
     experience: "Experience",
     experienceValue: "8+ years of software development",
@@ -92,7 +92,7 @@ export const translations = {
     aboutDescription2:
       "Disfruto compartiendo mi conocimiento con otros desarrolladores y contribuyendo a proyectos colaborativos.",
     aboutDescription3:
-      "Actualmente, estoy co-fundando iHabitar, donde lidero el desarrollo de la plataforma web usando React y Next.js, creando soluciones innovadoras para gestión inmobiliaria y optimizando experiencias de usuario.",
+      "Soy cofundador de iHabitar, un proyecto paralelo de gestión residencial donde desarrollo la plataforma web con React y Next.js.",
     quickFacts: "Datos Rápidos",
     experience: "Experiencia",
     experienceValue: "8+ años de desarrollo de software",

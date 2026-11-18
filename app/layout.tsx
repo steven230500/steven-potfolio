@@ -13,7 +13,7 @@ import Script from "next/script";
 const SITE_URL = "https://stevenpatino.dev";
 const SITE_TITLE = "Steven Patiño Urquijo — Systems Engineer & Full Stack Developer";
 const SITE_DESCRIPTION =
-  "Full Stack Developer & Systems Engineer with 8+ years of experience. I build and operate production sites and infrastructure (Next.js, Docker, CI/CD) for real clients in construction, healthcare, and community organizations. Co-founder at iHabitar.";
+  "Full Stack Developer & Systems Engineer with 8+ years of experience. I build and operate production sites and infrastructure (Next.js, Docker, CI/CD) for real clients in construction, healthcare, and community organizations. Co-founder of iHabitar, a side project for residential property management.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -129,11 +129,6 @@ export default function RootLayout({
                 "Docker",
                 "CI/CD",
               ],
-              worksFor: {
-                "@type": "Organization",
-                name: "iHabitar",
-                url: "https://ihabitar.com",
-              },
             }),
           }}
         />

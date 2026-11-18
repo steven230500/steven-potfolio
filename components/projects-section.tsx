@@ -13,6 +13,7 @@ type FeaturedProject = {
   industry: { en: string; es: string };
   blurb: { en: string; es: string };
   stack: string[];
+  apps?: { name: { en: string; es: string }; appStore: string; googlePlay: string }[];
 };
 
 const featured: FeaturedProject[] = [
@@ -20,12 +21,24 @@ const featured: FeaturedProject[] = [
     name: "iHabitar",
     domain: "ihabitar.com",
     url: "https://ihabitar.com/",
-    industry: { en: "Proptech · Residential management", es: "Proptech · Gestión residencial" },
+    industry: { en: "Side project · Co-founder and developer", es: "Proyecto paralelo · Cofundador y desarrollador" },
     blurb: {
-      en: "Residential management platform built end to end: the web platform in React/Next.js and the iHabitar and iHabitar Staff mobile apps in Flutter, live on the App Store and Google Play, for amenity booking, access control and community communication.",
-      es: "Plataforma de gestión residencial construida de punta a punta: la plataforma web en React/Next.js y las apps móviles iHabitar e iHabitar Staff en Flutter, publicadas en App Store y Google Play, para reservas de zonas comunes, control de acceso y comunicación con la comunidad.",
+      en: "We built a residential property management platform with React/Next.js, a Go and PostgreSQL backend, and Flutter apps for residents and staff. I integrated JEV into the help assistant so users can ask questions in natural language and get a recommendation from the help center.",
+      es: "Construimos una plataforma para conjuntos residenciales con React/Next.js, un backend en Go y PostgreSQL y apps en Flutter para residentes y personal. Integré JEV en el asistente de ayuda para que los usuarios puedan hacer preguntas en lenguaje natural y recibir una recomendación del centro de ayuda.",
     },
-    stack: ["Next.js", "React", "Flutter", "TypeScript"],
+    stack: ["Next.js", "Flutter", "Go", "PostgreSQL", "JEV"],
+    apps: [
+      {
+        name: { en: "iHabitar for residents", es: "iHabitar para residentes" },
+        appStore: "https://apps.apple.com/co/app/ihabitar/id6741701093",
+        googlePlay: "https://play.google.com/store/apps/details?id=com.innovafour.ihabitar",
+      },
+      {
+        name: { en: "iHabitar Staff", es: "iHabitar Staff" },
+        appStore: "https://apps.apple.com/co/app/ihabitar-staff/id6741703507",
+        googlePlay: "https://play.google.com/store/apps/details?id=com.innovafour.ihabitar_staff",
+      },
+    ],
   },
   {
     name: "Bocan Contracting",
@@ -109,73 +122,101 @@ export function ProjectsSection() {
         </p>
         <p className="text-muted-foreground max-w-2xl mb-10">
           {language === "es"
-            ? "Sitios en producción, hoy, para clientes reales — no solo el frontend, también la infraestructura que los mantiene corriendo."
-            : "Sites in production, today, for real clients — not just the frontend, also the infrastructure keeping them running."}
+            ? "Productos y sitios en producción, desde la interfaz hasta la infraestructura."
+            : "Products and sites in production, from the user interface to the underlying infrastructure."}
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           {featured.map((p) => (
-            <a
+            <article
               key={p.domain}
-              href={p.url}
-              target="_blank"
-              rel="noopener noreferrer"
               className="group rounded-lg border border-border bg-card overflow-hidden hover:border-accent/50 transition-colors"
             >
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border bg-secondary/40">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#565f72]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#565f72]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#565f72]" />
-                <span className="ml-2 flex-1 truncate rounded bg-background/60 px-2.5 py-0.5 font-mono text-xs text-muted-foreground">
-                  {p.domain}
-                </span>
-                <ExternalLink className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-              </div>
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border bg-secondary/40">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#565f72]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#565f72]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#565f72]" />
+                  <span className="ml-2 flex-1 truncate rounded bg-background/60 px-2.5 py-0.5 font-mono text-xs text-muted-foreground">
+                    {p.domain}
+                  </span>
+                  <ExternalLink className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                </div>
 
-              <div className="relative h-44 sm:h-52 overflow-hidden bg-background">
-                {p.image ? (
-                  <>
-                    <Image
-                      src={p.image}
-                      alt={p.name}
-                      fill
-                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                    />
-                    {p.logo && (
-                      <div className="absolute top-3 right-3 w-10 h-10 rounded-md bg-background/90 border border-border p-1.5">
-                        <div className="relative w-full h-full">
-                          <Image src={p.logo} alt="" fill className="object-contain" />
+                <div className="relative h-44 sm:h-52 overflow-hidden bg-background">
+                  {p.image ? (
+                    <>
+                      <Image
+                        src={p.image}
+                        alt={p.name}
+                        fill
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                      />
+                      {p.logo && (
+                        <div className="absolute top-3 right-3 w-10 h-10 rounded-md bg-background/90 border border-border p-1.5">
+                          <div className="relative w-full h-full">
+                            <Image src={p.logo} alt="" fill className="object-contain" />
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center bg-[#0e1219]">
-                    {p.logo && (
-                      <div className="relative w-32 h-32">
-                        <Image src={p.logo} alt={p.name} fill className="object-contain" />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-[#0e1219]">
+                      {p.logo && (
+                        <div className="relative w-32 h-32">
+                          <Image src={p.logo} alt={p.name} fill className="object-contain" />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
-              <div className="p-5">
-                <div className="flex items-baseline justify-between gap-3 mb-1">
-                  <h3 className="text-lg font-semibold text-foreground">{p.name}</h3>
+                <div className="p-5">
+                  <div className="flex items-baseline justify-between gap-3 mb-1">
+                    <h3 className="text-lg font-semibold text-foreground">{p.name}</h3>
+                  </div>
+                  <p className="font-mono text-xs text-muted-foreground mb-3">{p.industry[language]}</p>
+                  <p className="text-sm text-foreground leading-relaxed text-pretty mb-4">
+                    {p.blurb[language]}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-status-live" />
+                    <span className="text-status-live">deployed</span>
+                    <span className="text-muted-foreground">· {p.stack.join(" · ")}</span>
+                  </div>
                 </div>
-                <p className="font-mono text-xs text-muted-foreground mb-3">{p.industry[language]}</p>
-                <p className="text-sm text-foreground leading-relaxed text-pretty mb-4">
-                  {p.blurb[language]}
-                </p>
-                <div className="flex items-center gap-2 font-mono text-xs">
-                  <span className="w-1.5 h-1.5 rounded-full bg-status-live" />
-                  <span className="text-status-live">deployed</span>
-                  <span className="text-muted-foreground">· {p.stack.join(" · ")}</span>
-                </div>
-              </div>
-            </a>
+              </a>
+              {p.apps && (
+                <ul className="space-y-3 border-t border-border px-5 py-4 text-sm">
+                  {p.apps.map((app) => (
+                    <li key={app.appStore} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="font-medium text-foreground">{app.name[language]}</span>
+                      {[
+                        { label: "App Store", href: app.appStore },
+                        { label: "Google Play", href: app.googlePlay },
+                      ].map(({ label, href }) => (
+                        <a
+                          key={href}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${app.name[language]} · ${label}`}
+                          className="text-muted-foreground underline underline-offset-4 hover:text-accent"
+                        >
+                          {label}
+                        </a>
+                      ))}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
           ))}
         </div>
 
