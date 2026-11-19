@@ -1,21 +1,23 @@
-import { HeroSection } from "@/components/hero-section"
-import { AboutSection } from "@/components/about-section"
-import { SkillsSection } from "@/components/skills-section"
-import { ExperienceSection } from "@/components/experience-section"
-import { ProjectsSection } from "@/components/projects-section"
-import { ContactSection } from "@/components/contact-section"
-import { FloatingNav } from "@/components/floating-nav"
+import { SiteHeader } from "@/components/site/site-header"
+import { Hero } from "@/components/site/hero"
+import { Work } from "@/components/site/work"
+import { Experience } from "@/components/site/experience"
+import { Stack } from "@/components/site/stack"
+import { About } from "@/components/site/about"
+import { Contact } from "@/components/site/contact"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
-      <FloatingNav />
-      <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <ExperienceSection />
-      <ProjectsSection />
-      <ContactSection />
-    </main>
+    <>
+      <SiteHeader />
+      <main id="main">
+        <Hero />
+        <Work />
+        <Experience />
+        <Stack />
+        <About />
+        <Contact />
+      </main>
+    </>
   )
 }

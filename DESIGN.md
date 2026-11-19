@@ -1,46 +1,145 @@
-# Design System — Steven Patiño Portfolio
+# Sistema de diseño Añil, portafolio de Steven Patiño
+
+Versión 2 (noviembre 2026). Reemplaza el sistema "consola" (fondo tinta, acento ámbar y etiquetas mono en mayúsculas).
 
 ## Contexto
-Subject: portfolio de un Systems Engineer / Full Stack Developer que no solo construye interfaces — despliega y opera la infraestructura completa (Docker, CI/CD, droplets, Postgres compartido, Caddy) para negocios reales (construcción, salud, iglesia, grupo de apoyo).
-Audiencia: reclutadores técnicos, founders/clientes evaluando para contratar freelance, otros devs.
-Trabajo de la página: probar con evidencia real (screenshots + stack + qué se operó) que esto no es un portafolio de plantilla — es trabajo en producción, hoy, para clientes reales.
 
-Referencias (proyectos propios, no plantillas de terceros):
-- bocancontracting.ca — construcción, bilingüe, lightbox antes/después
-- casavidactg.com — iglesia + panel admin con roles + app de formularios separada
-- reformaripsfundacion.co — salud, migrado a export estático + API en PHP por hosting FTP
-- grupolafecartagena.org — grupo de apoyo anónimo, sin fotos de personas por diseño
+**Tema:** un ingeniero de sistemas de Cartagena que construye apps, webs y backends y además los opera: servidores, CI/CD, Postgres compartido y Caddy, para clientes reales.
+**Audiencia:** reclutadores técnicos, founders y clientes que evalúan contratar, y otros devs.
+**Objetivo de la página:** mostrar con evidencia real (dominio, captura, stack y qué se opera) que el trabajo está en producción.
 
-Anti-referencias: plantilla genérica — Inter, gradiente morado→cian, hero centrado, blobs flotando, 3 tarjetas redondeadas idénticas, glassmorphism, iconos en círculos de acento.
+**Por qué cambió:** la v1 repetía los patrones más comunes de los portafolios generados: casi negro con un único acento brillante, eyebrows mono en mayúsculas, marcadores `01 · 02` sin secuencia real, meta unida con `·` y skills en una cuadrícula de cajas. La v2 toma su identidad de Cartagena (muros encalados, puertas añil, la bahía de noche) y de la tipografía, no de la estética de terminal.
+
+## Principios
+
+1. **La tipografía es la marca.** Una sola familia, Archivo, y su eje de ancho `wdth` (62–125) hace de voz display. El nombre del hero se expande de condensado a ancho una sola vez, al cargar.
+2. **Sin cuadrículas de tarjetas.** El contenido se lee como columna editorial: filas que se expanden, una línea de tiempo y el stack escrito en prosa.
+3. **Un solo objeto con marco.** El marco de navegador, con el dominio real y una captura real, solo aparece dentro de un proyecto abierto. Sirve de prueba, no de decoración.
+4. **El movimiento responde a algo.** Hay un único momento orquestado (la entrada del hero). El resto responde a una acción (expandir, copiar, cambiar tema o idioma) o al progreso del scroll.
+5. **Estructura con significado.** No hay numeración salvo los años del timeline, que sí son una secuencia. No hay eyebrows. Los títulos van en sentence case.
 
 ## Color
-```
---bg:         #0B0E14   fondo (tinta azul-negro, no negro puro)
---surface:    #11151D   paneles / cards
---surface-2:  #171C26   hover / rows alternas
---border:     #232935   bordes 1px
---text:       #E7EAF0   texto principal
---text-dim:   #8B93A6   texto secundario / meta
---text-faint: #565F72   labels terciarios
---accent:     #F5A623   ámbar — único acento de marca. Interactivo: links, focus, cifras clave, cursor.
---status-live:#5FBF7A   verde — semántico, no decorativo. Solo para "● deployed/live". No se usa en UI general.
-```
-Justificación: ámbar único evita el cluster "negro + acento ácido verde/bermellón" tal cual — aquí el verde queda reservado a un uso semántico (estado), no es el acento de marca.
+
+Los roles semánticos se definen en `app/globals.css`, bajo `:root` y `.dark`. Tailwind los expone como `bg-bg`, `text-text-2`, `bg-accent` y así sucesivamente.
+
+| Rol | Claro ("cal") | Oscuro ("bahía") | Uso |
+|---|---|---|---|
+| `bg` | `#F3F4F0` | `#0D1220` | Fondo de la página |
+| `surface` | `#FFFFFF` | `#131A2B` | Chips, marco de navegador, bloque de contacto |
+| `surface-2` | `#E9EBE5` | `#1A2236` | Hover, barra de URL, botones secundarios |
+| `line` | `#D6D9D1` | `#252F47` | Reglas de 1px y bordes |
+| `line-strong` | `#B9BDB3` | `#36425F` | Subrayados y bordes en hover |
+| `text` | `#141821` | `#E8EBF3` | Texto principal |
+| `text-2` | `#4A5263` | `#A3ABBF` | Texto secundario |
+| `text-3` | `#737B8C` | `#727C95` | Meta: etiquetas, fechas, años |
+| `accent` (añil) | `#2E3FD1` | `#9AABFF` | Único acento: links, CTA, foco, fila abierta, progreso |
+| `accent-soft` | `#E2E5FA` | `#1D2650` | Fondo en hover de los canales de contacto |
+| `live` | `#1B8049` | `#5FD08A` | Solo semántico: "en línea" y "copiado" |
+
+El tema por defecto sigue al sistema y se puede alternar con el botón del header. El cambio se anima con un círculo que se expande desde el botón (View Transitions).
 
 ## Tipografía
-Display: Space Grotesk, 600/700, tracking ajustado — solo en H1 del hero y números clave. Uso restringido.
-Body: Geist Sans — texto de párrafo, nav, botones.
-Mono: Geist Mono — labels, meta (fechas, stack, status), nav uppercase, terminal blocks. Este es el hilo conductor visual de todo el sitio.
-Escala: 13px (meta) / 16px (body) / 20px (subtítulos) / clamp(2.5rem,6vw,4.5rem) (H1).
+
+- **Archivo** (variable, `wght` + `wdth`, vía `next/font/google`): display, títulos y cuerpo.
+  - `wide` = `wdth 125`: hero y títulos de sección.
+  - `semi-wide` = `wdth 112`: nombres de proyecto, años del timeline, email de contacto y marca del header.
+  - Cuerpo con `wdth 100`.
+- **Geist Mono:** solo para strings literales de máquina, como dominios y URLs. Nunca para etiquetas.
+
+Escala (base 17px, razón 1.25), en tokens `text-*`:
+
+| Token | Tamaño | Uso |
+|---|---|---|
+| `text-meta` | 13 | Etiquetas de campo, pie |
+| `text-small` | 15 | Meta secundaria, nav |
+| `text-body` | 17 | Párrafos |
+| `text-lead` | 19→22 | Intro del hero, prosa del stack |
+| `text-title` | 22→28 | Cargo, años, filas en móvil |
+| `text-section` | 36→68 | Títulos de sección (`wide`, 800) |
+| `text-display` | ~82→168 | Nombre del hero (`wide`, 800) |
+
+Medida de lectura: `--measure: 38rem` (unos 68 caracteres).
 
 ## Layout
-Hero alineado a la izquierda (no centrado). Sin blobs decorativos, sin gradient-text. Bloque tipo terminal (`$ whoami`) reemplaza las 3 tarjetas de contacto con iconos en círculo.
-Nav: barra superior delgada, sólida (sin blur/glass), marca mono a la izquierda, links mono uppercase a la derecha, borde inferior 1px.
-Proyectos destacados: frame tipo ventana de navegador (dots + barra de URL real) con el screenshot real adentro, no en carrusel — grid 2 columnas para que cada caso se lea completo. Línea de status debajo: `● deployed · stack · industria`.
-Experiencia: timeline vertical con regla 1px, fechas en mono, sin cards idénticas apiladas.
 
-## Signature
-El frame de navegador con URL real + screenshot real + status line `● deployed`. Es el único elemento "de marca" del sitio — funcional (prueba que el sitio existe y corre), no decorativo. Todo lo demás (nav, cards, timeline) es disciplinado y plano alrededor de esto.
+- Contenedor `--page: 72rem` con `--gutter: clamp(1rem, 4vw, 2.5rem)`. Todo se alinea a la izquierda.
+- **Hero:** nombre en dos líneas; la segunda va sangrada (`1.1em`), lo que da asimetría editorial. La intro y los CTA arrancan al 33% del ancho en desktop.
+- **Encabezado de sección:** título ancho a la izquierda y el lede alineado a la derecha en desktop.
+- **Trabajo:** lista de filas separadas por reglas de 1px. Al abrir una fila aparecen el marco de navegador (52%) y los detalles al lado; en móvil se apilan.
+- **Experiencia:** años en una columna fija de 11rem, con `sticky` en desktop, y una regla vertical que se rellena con el scroll.
+- **Stack:** oraciones con chips en línea, que arrancan al 33% del ancho.
+- **Contacto:** bloque `surface` con el email como elemento display.
+
+```
+┌ Steven Patiño          Trabajo Experiencia Stack …   EN ◐ ┐
+│ Ingeniero de sistemas y desarrollador full stack          │
+│ STEVEN                                                    │
+│      PATIÑO                                               │
+│                    Construyo apps… ┃ [Ver el trabajo] Escríbeme
+├───────────────────────────────────────────────────────────┤
+│ Trabajo                                  lede a la derecha│
+│ ─ iHabitar   Gestión de conjuntos   • ihabitar.com    (×) │
+│   ┌ marco navegador ┐  resumen / en producción / stack    │
+│ ─ Bocan Contracting …                                 (+) │
+├───────────────────────────────────────────────────────────┤
+│ 2023–26 ●  Full Stack Developer, FALP                     │
+│ 2023    ●  Sr. Mobile Developer, DD360                    │
+└───────────────────────────────────────────────────────────┘
+```
+
+## Radios (por jerarquía)
+
+- `rounded-chip` (5px): chips de tecnología.
+- `rounded-frame` (12px): marco de navegador.
+- `rounded-full`: botones, toggles y el botón de expandir.
+
+## Iconos
+
+- **UI: Phosphor** (`@phosphor-icons/react`), peso `regular` a 16–20px y `bold` solo en el `+` de expandir y en el check de copiar. Se importan desde `components/site/icons.tsx` y siempre heredan `currentColor`.
+- **Tecnologías: Simple Icons** (`simple-icons`), monocromos en `text-2`, dentro de `TechChip`. Si una marca no está en Simple Icons (AWS, por ejemplo), el chip se muestra sin logo.
+- El link externo usa una flecha ↗ propia en SVG que se desplaza 1px en hover.
+- Prohibido: iconos dentro de círculos de acento e iconos decorativos sin función.
+
+## Movimiento
+
+Tokens: `--ease-out: cubic-bezier(.16,1,.3,1)`, `--ease-in-out: cubic-bezier(.65,0,.35,1)`.
+
+| Token | Duración | Para |
+|---|---|---|
+| `--dur-1` | 120ms | Color y opacidad en hover |
+| `--dur-2` | 220ms | Cambio de icono, toggles |
+| `--dur-3` | 420ms | Expandir/colapsar, indicador del nav |
+| `--dur-4` | 1100ms | Entrada del hero (única) |
+
+Inventario completo; no se añade movimiento fuera de esta lista:
+
+1. **Entrada del hero:** cada línea del nombre sube desde una máscara y pasa de `wdth 62` a `125`. Después aparecen la intro, los CTA y el estado, de forma escalonada.
+2. **Progreso de lectura:** línea de 1px bajo el header, con `animation-timeline: scroll()`.
+3. **Timeline:** la regla de Experiencia se rellena en añil con `animation-timeline: view()`.
+4. **Filas de proyecto:** la altura se anima con `grid-template-rows: 0fr → 1fr`, el contenido entra con fade y desplazamiento de 6px, y el `+` rota 45° hasta quedar en `×`.
+5. **Indicador del nav:** una barra de 2px que se desliza hacia la sección activa.
+6. **Tema:** View Transition con un círculo que se expande desde el botón.
+7. **Idioma:** View Transition con un fundido corto.
+8. **Copiar email:** el icono pasa de copiar a check, el borde se vuelve `live` y el texto se anuncia con `aria-live`.
+9. **Estado "disponible":** un pulso lento (2.4s) en el punto verde. Es el único bucle.
+
+Todo se desactiva con `prefers-reduced-motion: reduce`. Lo que es scroll-driven va dentro de `@supports (animation-timeline: scroll())`, y sin soporte la regla queda llena.
+
+## Accesibilidad
+
+- Foco visible: contorno de 2px en añil con offset de 3px.
+- Enlace "Saltar al contenido", `aria-expanded` y `aria-controls` en las filas, e `inert` en los paneles cerrados.
+- `<html lang>` se sincroniza con el idioma elegido, que se guarda en `localStorage`.
+- Contraste: el añil `#2E3FD1` sobre `#F3F4F0` supera 4.5:1, y `#9AABFF` sobre `#0D1220` también.
+
+## Archivos
+
+- Tokens: `app/globals.css`
+- Contenido bilingüe (proyectos, trabajos, stack): `lib/content.ts`
+- Textos de interfaz: `lib/translations.ts`
+- Componentes: `components/site/*`
+- `components/ui/*`: kit de shadcn que no se usa en la página. Hereda los tokens a través de los alias.
 
 ## Prohibido
-Gradientes morados/cian · glassmorphism · blobs flotando animados · hero centrado · 3-4 tarjetas redondeadas idénticas con icono en círculo · marcadores 01/02/03 sin función real · animación de scroll en cada sección · Inter como body.
+
+Cuadrícula de tarjetas idénticas · eyebrows en mayúsculas · numeración sin secuencia · mono para etiquetas · gradientes como decoración · glassmorphism · blobs · fade-up en cada sección · más de un acento · fotos de stock o generadas haciéndose pasar por reales.

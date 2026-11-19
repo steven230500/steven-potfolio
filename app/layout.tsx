@@ -1,14 +1,11 @@
 import type React from "react";
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
+import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
-import { Space_Grotesk } from "next/font/google";
+import { Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "@/lib/language-context";
 import { ThemeProvider } from "@/components/theme-provider"; 
-import { Suspense } from "react";
 import "./globals.css";
-import Script from "next/script";
 
 const SITE_URL = "https://stevenpatino.dev";
 const SITE_TITLE = "Steven Patiño Urquijo — Systems Engineer & Full Stack Developer";
@@ -67,13 +64,20 @@ export const metadata: Metadata = {
   category: "technology",
 };
 
-const geistSans = GeistSans.variable;
-const geistMono = GeistMono.variable;
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  weight: ["600", "700"],
+// One family, used actively: Archivo's width axis (62–125) carries the display voice.
+const archivo = Archivo({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-archivo",
+  axes: ["wdth"],
+  display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3f4f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d1220" },
+  ],
+};
 
 export default function RootLayout({
   children,
@@ -84,7 +88,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`dark ${geistSans} ${geistMono} ${spaceGrotesk.variable} antialiased`}
+      className={`${archivo.variable} ${GeistMono.variable} antialiased`}
     >
       <head>
         <script
@@ -132,28 +136,11 @@ export default function RootLayout({
             }),
           }}
         />
-        <meta name="theme-color" content="#0b0e14" />
       </head>
       <body className="min-h-screen">
-        <Suspense fallback={<div>Loading...</div>}>
-          <LanguageProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem={false}
-              forcedTheme="dark"
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </LanguageProvider>
-        </Suspense>
-        {/* <Analytics /> */}
-        <Script
-          id="recaptcha"
-          strategy="afterInteractive"
-          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <LanguageProvider>{children}</LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

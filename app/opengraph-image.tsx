@@ -2,7 +2,9 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const alt = "Steven Patiño — Systems engineer and full stack developer";
 
+// Añil design system: cal background, ink type, one indigo accent.
 export default function OGImage() {
   return new ImageResponse(
     (
@@ -12,75 +14,38 @@ export default function OGImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          background: "#0b0e14",
-          backgroundImage:
-            "linear-gradient(to right, #1a2130 1px, transparent 1px), linear-gradient(to bottom, #1a2130 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-          fontFamily: "monospace",
+          justifyContent: "space-between",
+          background: "#f3f4f0",
+          padding: "72px 80px",
+          fontFamily: "sans-serif",
+          color: "#141821",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            fontSize: 22,
-            color: "#f5a623",
-            letterSpacing: 4,
-            textTransform: "uppercase",
-            marginBottom: 28,
-          }}
-        >
-          Systems Engineer · Full Stack
+        <div style={{ display: "flex", fontSize: 30, color: "#4a5263" }}>
+          Systems engineer and full stack developer
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            fontSize: 72,
-            fontWeight: 700,
-            color: "#e7eaf0",
-            marginBottom: 24,
-            letterSpacing: -1,
-          }}
-        >
-          Steven Patiño Urquijo
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            fontSize: 28,
-            color: "#8b93a6",
-            maxWidth: 900,
-          }}
-        >
-          I build & operate production sites for real clients — construction,
-          healthcare, church, community orgs.
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginTop: 48,
-            fontSize: 22,
-            color: "#5fbf7a",
-          }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", lineHeight: 0.92 }}>
+          <div style={{ display: "flex", fontSize: 168, fontWeight: 800, letterSpacing: "-0.04em" }}>Steven</div>
           <div
             style={{
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              background: "#5fbf7a",
               display: "flex",
+              fontSize: 168,
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
+              paddingLeft: 120,
             }}
-          />
-          stevenpatino.dev
+          >
+            Patiño
+          </div>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 28 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, color: "#4a5263" }}>
+            <div style={{ width: 14, height: 14, borderRadius: 999, background: "#1b8049" }} />
+            Cartagena, Colombia
+          </div>
+          <div style={{ display: "flex", color: "#2e3fd1", fontWeight: 700 }}>stevenpatino.dev</div>
         </div>
       </div>
     ),
