@@ -10,7 +10,7 @@ import "./globals.css";
 const SITE_URL = "https://stevenpatino.dev";
 const SITE_TITLE = "Steven Patiño Urquijo — Systems Engineer & Full Stack Developer";
 const SITE_DESCRIPTION =
-  "Full Stack Developer & Systems Engineer with 8+ years of experience. I build and operate production sites and infrastructure (Next.js, Docker, CI/CD) for real clients in construction, healthcare, and community organizations. Co-founder of iHabitar, a side project for residential property management.";
+  "Full Stack Developer & Systems Engineer with 8+ years of experience. I build and operate production sites and infrastructure (Next.js, Docker, CI/CD) for real clients in healthcare, churches and community organizations. Partner at Innovafour as a side project, where I co-founded iHabitar and work on Reserday and IForevents.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

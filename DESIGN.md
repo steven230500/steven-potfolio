@@ -14,7 +14,7 @@ Versión 2 (noviembre 2026). Reemplaza el sistema "consola" (fondo tinta, acento
 
 1. **La tipografía es la marca.** Una sola familia, Archivo, y su eje de ancho `wdth` (62–125) hace de voz display. El nombre del hero se expande de condensado a ancho una sola vez, al cargar.
 2. **Sin cuadrículas de tarjetas.** El contenido se lee como columna editorial: filas que se expanden, una línea de tiempo y el stack escrito en prosa.
-3. **Un solo objeto con marco.** El marco de navegador, con el dominio real y una captura real, solo aparece dentro de un proyecto abierto. Sirve de prueba, no de decoración.
+3. **Un solo objeto con marco.** El marco de navegador, con el dominio real y una captura real tomada del sitio en vivo (`public/projects/<slug>/screenshot.jpg`, 1200px), solo aparece dentro de un proyecto abierto. Sirve de prueba, no de decoración.
 4. **El movimiento responde a algo.** Hay un único momento orquestado (la entrada del hero). El resto responde a una acción (expandir, copiar, cambiar tema o idioma) o al progreso del scroll.
 5. **Estructura con significado.** No hay numeración salvo los años del timeline, que sí son una secuencia. No hay eyebrows. Los títulos van en sentence case.
 
@@ -46,22 +46,23 @@ El tema por defecto sigue al sistema y se puede alternar con el botón del heade
   - Cuerpo con `wdth 100`.
 - **Geist Mono:** solo para strings literales de máquina, como dominios y URLs. Nunca para etiquetas.
 
-Escala (base 17px, razón 1.25), en tokens `text-*`:
+Escala (base 16px, razón ~1.2), en tokens `text-*`:
 
 | Token | Tamaño | Uso |
 |---|---|---|
 | `text-meta` | 13 | Etiquetas de campo, pie |
-| `text-small` | 15 | Meta secundaria, nav |
-| `text-body` | 17 | Párrafos |
-| `text-lead` | 19→22 | Intro del hero, prosa del stack |
-| `text-title` | 22→28 | Cargo, años, filas en móvil |
-| `text-section` | 36→68 | Títulos de sección (`wide`, 800) |
-| `text-display` | ~82→168 | Nombre del hero (`wide`, 800) |
+| `text-small` | 14 | Meta secundaria, nav |
+| `text-body` | 16 | Párrafos |
+| `text-lead` | 17→19 | Intro del hero, prosa del stack |
+| `text-title` | 19→22 | Cargo, años, filas en móvil |
+| `text-section` | 30→48 | Títulos de sección (`wide`, 800) |
+| `text-display` | ~57→112 | Nombre del hero (`wide`, 800) |
 
 Medida de lectura: `--measure: 38rem` (unos 68 caracteres).
 
 ## Layout
 
+- **Header:** píldora flotante centrada (`rounded-full`, `surface`, borde `line`), con monograma "SP", links, idioma y tema. La sección activa se resalta con una píldora `surface-2` que se desliza. Se oculta al bajar y vuelve al subir o al recibir foco. En móvil muestra la sección actual y el menú crece desde la misma píldora.
 - Contenedor `--page: 72rem` con `--gutter: clamp(1rem, 4vw, 2.5rem)`. Todo se alinea a la izquierda.
 - **Hero:** nombre en dos líneas; la segunda va sangrada (`1.1em`), lo que da asimetría editorial. La intro y los CTA arrancan al 33% del ancho en desktop.
 - **Encabezado de sección:** título ancho a la izquierda y el lede alineado a la derecha en desktop.
@@ -71,7 +72,7 @@ Medida de lectura: `--measure: 38rem` (unos 68 caracteres).
 - **Contacto:** bloque `surface` con el email como elemento display.
 
 ```
-┌ Steven Patiño          Trabajo Experiencia Stack …   EN ◐ ┐
+┌        ( SP  Trabajo  Experiencia  Stack …  EN ◐ )         ┐
 │ Ingeniero de sistemas y desarrollador full stack          │
 │ STEVEN                                                    │
 │      PATIÑO                                               │
@@ -80,7 +81,7 @@ Medida de lectura: `--measure: 38rem` (unos 68 caracteres).
 │ Trabajo                                  lede a la derecha│
 │ ─ iHabitar   Gestión de conjuntos   • ihabitar.com    (×) │
 │   ┌ marco navegador ┐  resumen / en producción / stack    │
-│ ─ Bocan Contracting …                                 (+) │
+│ ─ Reserday   Pasadías a las islas   Beta pública      (+) │
 ├───────────────────────────────────────────────────────────┤
 │ 2023–26 ●  Full Stack Developer, FALP                     │
 │ 2023    ●  Sr. Mobile Developer, DD360                    │
@@ -121,7 +122,9 @@ Inventario completo; no se añade movimiento fuera de esta lista:
 6. **Tema:** View Transition con un círculo que se expande desde el botón.
 7. **Idioma:** View Transition con un fundido corto.
 8. **Copiar email:** el icono pasa de copiar a check, el borde se vuelve `live` y el texto se anuncia con `aria-live`.
-9. **Estado "disponible":** un pulso lento (2.4s) en el punto verde. Es el único bucle.
+9. **Header:** se oculta al hacer scroll hacia abajo y reaparece al subir (`--dur-3`).
+10. **Vista previa en hover:** en desktop con mouse, una captura de 18rem sigue al cursor sobre las filas cerradas de Trabajo.
+11. **Estado "disponible":** un pulso lento (2.4s) en el punto verde. Es el único bucle.
 
 Todo se desactiva con `prefers-reduced-motion: reduce`. Lo que es scroll-driven va dentro de `@supports (animation-timeline: scroll())`, y sin soporte la regla queda llena.
 

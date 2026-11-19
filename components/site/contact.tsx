@@ -47,7 +47,7 @@ export function Contact() {
         <div className="mt-12 flex flex-col items-start gap-4 sm:mt-16 lg:flex-row lg:items-center lg:gap-6">
           <a
             href={`mailto:${contact.email}`}
-            className="semi-wide break-all text-[clamp(1.375rem,0.6rem+3.6vw,3.5rem)] font-bold leading-tight tracking-[-0.02em] text-accent underline decoration-transparent decoration-[0.06em] underline-offset-[0.18em] transition-[text-decoration-color] duration-[var(--dur-2)] hover:decoration-accent"
+            className="semi-wide break-all text-[clamp(1.25rem,0.7rem+2.2vw,2.5rem)] font-bold leading-tight tracking-[-0.02em] text-accent underline decoration-transparent decoration-[0.06em] underline-offset-[0.18em] transition-[text-decoration-color] duration-[var(--dur-2)] hover:decoration-accent"
           >
             {contact.email}
           </a>

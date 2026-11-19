@@ -15,7 +15,7 @@ export function Stack() {
     <Section id="stack" title={t.stack.title} lede={t.stack.lede}>
       <div className="space-y-6 sm:space-y-8 lg:ml-[33%]">
         {stackLines.map((line) => (
-          <p key={line.lead.en} className="text-lead leading-[2.1] text-text-2 sm:text-title sm:leading-[1.9]">
+          <p key={line.lead.en} className="text-lead leading-[2.1] text-text-2">
             {line.lead[language]}{" "}
             {line.items.map((item, i) => (
               <Fragment key={item}>

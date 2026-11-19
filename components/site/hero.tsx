@@ -10,9 +10,9 @@ export function Hero() {
   const { t } = useLanguage()
 
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative px-[var(--gutter)] pb-20 pt-[calc(var(--header-h)+clamp(3rem,10vh,7rem))] sm:pb-28">
+    <section id="top" aria-labelledby="hero-title" className="relative px-[var(--gutter)] pb-20 pt-[calc(var(--header-h)+clamp(2.5rem,8vh,5rem))] sm:pb-28">
       <div className="mx-auto max-w-[var(--page)]">
-        <p className="hero-after mb-6 text-small text-text-2 sm:mb-8 sm:text-lead" style={delay(0)}>
+        <p className="hero-after mb-5 text-small text-text-2 sm:mb-6 sm:text-body" style={delay(0)}>
           {t.hero.role}
         </p>
 

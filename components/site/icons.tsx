@@ -2,7 +2,13 @@
 
 import type { SimpleIcon } from "simple-icons"
 import {
+  siAstro,
   siCaddy,
+  siCloudflare,
+  siDrizzle,
+  siPwa,
+  siRabbitmq,
+  siResend,
   siClickhouse,
   siDart,
   siDigitalocean,
@@ -75,6 +81,12 @@ const logos: Record<string, SimpleIcon> = {
   DigitalOcean: siDigitalocean,
   Vercel: siVercel,
   Tailscale: siTailscale,
+  Astro: siAstro,
+  Drizzle: siDrizzle,
+  Resend: siResend,
+  RabbitMQ: siRabbitmq,
+  PWA: siPwa,
+  Cloudflare: siCloudflare,
 }
 
 export function TechLogo({ name, className }: { name: string; className?: string }) {

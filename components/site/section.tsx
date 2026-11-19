@@ -16,9 +16,9 @@ export function Section({
   className?: string
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={cn("px-[var(--gutter)] py-20 sm:py-28", className)}>
+    <section id={id} aria-labelledby={`${id}-title`} className={cn("px-[var(--gutter)] py-16 sm:py-24", className)}>
       <div className="mx-auto max-w-[var(--page)]">
-        <header className="mb-12 flex flex-col gap-4 sm:mb-16 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+        <header className="mb-10 flex flex-col gap-3 sm:mb-12 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <h2 id={`${id}-title`} className="wide text-section font-extrabold tracking-[-0.03em] text-text">
             {title}
           </h2>

@@ -15,7 +15,7 @@ export const translations = {
     },
     hero: {
       role: "Systems engineer and full stack developer",
-      lead: "I build mobile apps, websites and backends, and I keep them running: servers, deploys and databases included. Eight years shipping for clients in Colombia, Chile, Mexico, Panama and Canada.",
+      lead: "I build mobile apps, websites and backends, and I keep them running: servers, deploys and databases included. Eight years shipping for clients in Colombia, Chile, Mexico and Panama.",
       localTime: "In Cartagena it's",
       available: "Open to remote roles and freelance projects",
       ctaWork: "See the work",
@@ -25,6 +25,8 @@ export const translations = {
       title: "Work",
       lede: "Products and sites in production. Each one lists what it runs on and what I operate.",
       live: "Live",
+      beta: "Public beta",
+      links: "Also",
       open: "Show details",
       close: "Hide details",
       visit: "Visit",
@@ -45,7 +47,7 @@ export const translations = {
       title: "About",
       p1: "I'm a systems engineer from Cartagena, Colombia. I started in 2018 building web and mobile work for an agency, and since then I've worked for product teams in health, logistics, retail and real estate.",
       p2: "Today most of my work is end to end: I design the app, write the backend, set up the server and the pipeline, and stay on call when something breaks. Small businesses get the same infrastructure discipline a product team would.",
-      p3: "I co-founded iHabitar, a side project for residential property management, where I build the web platform and the assistant.",
+      p3: "On the side I'm a partner at Innovafour, a software company where we build iHabitar, Reserday and IForevents. I co-founded iHabitar and build its web platform and assistant.",
       facts: {
         based: "Based in",
         basedValue: "Cartagena, Colombia (UTC−5)",
@@ -86,7 +88,7 @@ export const translations = {
     },
     hero: {
       role: "Ingeniero de sistemas y desarrollador full stack",
-      lead: "Construyo apps móviles, sitios web y backends, y los mantengo funcionando: servidores, despliegues y bases de datos incluidos. Ocho años entregando para clientes en Colombia, Chile, México, Panamá y Canadá.",
+      lead: "Construyo apps móviles, sitios web y backends, y los mantengo funcionando: servidores, despliegues y bases de datos incluidos. Ocho años entregando para clientes en Colombia, Chile, México y Panamá.",
       localTime: "En Cartagena son las",
       available: "Disponible para roles remotos y proyectos freelance",
       ctaWork: "Ver el trabajo",
@@ -96,6 +98,8 @@ export const translations = {
       title: "Trabajo",
       lede: "Productos y sitios en producción. Cada uno muestra sobre qué corre y qué opero yo.",
       live: "En línea",
+      beta: "Beta pública",
+      links: "También",
       open: "Ver detalles",
       close: "Ocultar detalles",
       visit: "Visitar",
@@ -116,7 +120,7 @@ export const translations = {
       title: "Sobre mí",
       p1: "Soy ingeniero de sistemas de Cartagena, Colombia. Empecé en 2018 haciendo web y móvil para una agencia, y desde entonces he trabajado con equipos de producto en salud, logística, comercio y bienes raíces.",
       p2: "Hoy la mayor parte de mi trabajo es de punta a punta: diseño la app, escribo el backend, monto el servidor y el pipeline, y respondo cuando algo se cae. Los negocios pequeños reciben la misma disciplina de infraestructura que tendría un equipo de producto.",
-      p3: "Soy cofundador de iHabitar, un proyecto paralelo de gestión residencial, donde construyo la plataforma web y el asistente.",
+      p3: "En paralelo soy socio de Innovafour, una empresa de software donde construimos iHabitar, Reserday e IForevents. Soy cofundador de iHabitar y construyo su plataforma web y el asistente.",
       facts: {
         based: "Vivo en",
         basedValue: "Cartagena, Colombia (UTC−5)",

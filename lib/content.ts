@@ -18,11 +18,14 @@ export type Project = {
   url: string
   image?: string
   logo?: string
+  /** Live by default. "beta" = public test environment, production not launched yet. */
+  status?: "beta"
   role?: Localized
   sector: Localized
   summary: Localized
   operated: Localized
   stack: string[]
+  links?: { label: Localized; url: string }[]
   apps?: { name: Localized; appStore: string; googlePlay: string }[]
 }
 
@@ -31,17 +34,19 @@ export const projects: Project[] = [
     name: "iHabitar",
     domain: "ihabitar.com",
     url: "https://ihabitar.com/",
-    role: { en: "Co-founder, developer", es: "Cofundador, desarrollador" },
+    image: "/projects/ihabitar/screenshot.jpg",
+    role: { en: "Co-founder. Side project with Innovafour", es: "Cofundador. Proyecto paralelo con Innovafour" },
     sector: { en: "Residential property management", es: "Gestión de conjuntos residenciales" },
     summary: {
       en: "A platform for residential complexes: a React/Next.js web app, a Go and PostgreSQL backend, and Flutter apps for residents and staff. I integrated JEV into the help assistant so people can ask questions in plain language and get an answer from the help center.",
       es: "Plataforma para conjuntos residenciales: web en React/Next.js, backend en Go y PostgreSQL, y apps en Flutter para residentes y personal. Integré JEV en el asistente de ayuda para que las personas pregunten en lenguaje natural y reciban una respuesta del centro de ayuda.",
     },
     operated: {
-      en: "Side project, built with a co-founder. Two apps published on both stores.",
-      es: "Proyecto paralelo, construido con un cofundador. Dos apps publicadas en ambas tiendas.",
+      en: "Built and run by Innovafour. Images go to GHCR and deploy over Tailscale to our droplet: main to production, develop to the dev environment. Two apps on both stores.",
+      es: "Construido y operado por Innovafour. Las imágenes van a GHCR y se despliegan por Tailscale a nuestro droplet: main a producción, develop a desarrollo. Dos apps en ambas tiendas.",
     },
-    stack: ["Next.js", "Flutter", "Go", "PostgreSQL"],
+    stack: ["Next.js", "Astro", "Flutter", "Go", "PostgreSQL", "Redis", "RabbitMQ"],
+    links: [{ label: { en: "Guest access", es: "Acceso de invitados" }, url: "https://guest.ihabitar.com/" }],
     apps: [
       {
         name: { en: "iHabitar for residents", es: "iHabitar para residentes" },
@@ -56,27 +61,44 @@ export const projects: Project[] = [
     ],
   },
   {
-    name: "Bocan Contracting",
-    domain: "bocancontracting.ca",
-    url: "https://www.bocancontracting.ca/",
-    image: "/projects/bocan/hero-construction.jpg",
-    logo: "/projects/bocan/logo.png",
-    sector: { en: "Construction, Canada and Colombia", es: "Construcción, Canadá y Colombia" },
+    name: "Reserday",
+    domain: "reserday.dev",
+    url: "https://reserday.dev/",
+    image: "/projects/reserday/screenshot.jpg",
+    status: "beta",
+    role: { en: "Side project with Innovafour", es: "Proyecto paralelo con Innovafour" },
+    sector: { en: "Island day trips, Cartagena", es: "Pasadías a las islas, Cartagena" },
     summary: {
-      en: "Bilingual site for a contracting firm with 25+ years of work: tabs per division, a before/after slider with lightbox, and a gallery made from real job sites.",
-      es: "Sitio bilingüe para una constructora con más de 25 años: pestañas por división, slider antes/después con lightbox y una galería hecha con obras reales.",
+      en: "Booking and payments for day trips to the islands of Cartagena. Agencies, promoters and operators sell through it; every booking gets its own payment link and a boarding QR.",
+      es: "Reservas y pagos de pasadías a las islas de Cartagena. Agencias, promotores y operadores venden con ella; cada reserva tiene su propio link de pago y su QR de abordaje.",
     },
     operated: {
-      en: "Deployed on Vercel.",
-      es: "Desplegado en Vercel.",
+      en: "Public test environment while production launches. Go API behind KrakenD, Flutter app and admin, Wompi payments, deployed to the Innovafour droplet.",
+      es: "Entorno de pruebas público mientras sale producción. API en Go detrás de KrakenD, app y admin en Flutter, pagos con Wompi, desplegado en el droplet de Innovafour.",
     },
-    stack: ["Next.js", "Tailwind CSS", "Vercel"],
+    stack: ["Next.js", "Go", "Flutter", "PostgreSQL"],
+  },
+  {
+    name: "Introduce",
+    domain: "introducechurch.com",
+    url: "https://introducechurch.com/",
+    image: "/projects/introduce/screenshot.jpg",
+    sector: { en: "Free projection software for churches", es: "Software de proyección gratis para iglesias" },
+    summary: {
+      en: "Desktop app for projecting lyrics, Bible verses, announcements and videos on the church screen from a single window, for Mac and Windows.",
+      es: "App de escritorio para proyectar letras, versículos, avisos y videos en la pantalla de la iglesia desde una sola ventana, para Mac y Windows.",
+    },
+    operated: {
+      en: "Releases published on GitHub. The website and the Go API run on a droplet.",
+      es: "Las versiones se publican en GitHub. La web y la API en Go corren en un droplet.",
+    },
+    stack: ["Flutter", "Go", "PostgreSQL", "Docker"],
   },
   {
     name: "Casa Vida",
     domain: "casavidactg.com",
     url: "https://casavidactg.com/",
-    image: "/projects/casa-vida/real-worship.jpg",
+    image: "/projects/casa-vida/screenshot.jpg",
     logo: "/projects/casa-vida/logo.png",
     sector: { en: "Church, Cartagena", es: "Iglesia, Cartagena" },
     summary: {
@@ -84,16 +106,17 @@ export const projects: Project[] = [
       es: "Sitio público más un panel de administración con roles reales (admin, pastor, servidor), calendario de citas y un constructor de formularios dinámicos aparte.",
     },
     operated: {
-      en: "Both apps share one Postgres on a single droplet, deployed with Docker Compose and GitHub Actions.",
-      es: "Ambas apps comparten un Postgres en un solo droplet, con despliegue por Docker Compose y GitHub Actions.",
+      en: "Both apps share one Postgres 16 on a single droplet, behind the shared Caddy, deployed with GitHub Actions and Docker Compose.",
+      es: "Ambas apps comparten un Postgres 16 en un solo droplet, detrás del Caddy compartido, con despliegue por GitHub Actions y Docker Compose.",
     },
-    stack: ["Next.js", "PostgreSQL", "Docker", "GitHub Actions"],
+    stack: ["Next.js", "Drizzle", "PostgreSQL", "Resend", "Docker"],
+    links: [{ label: { en: "Form builder", es: "Constructor de formularios" }, url: "https://form.casavidactg.com/" }],
   },
   {
     name: "Reformar IPS",
     domain: "reformaripsfundacion.co",
     url: "https://www.reformaripsfundacion.co/",
-    image: "/projects/reformar-ips/site.jpg",
+    image: "/projects/reformar-ips/screenshot.jpg",
     logo: "/projects/reformar-ips/logo.png",
     sector: { en: "Healthcare, Bolívar", es: "Salud, Bolívar" },
     summary: {
@@ -101,15 +124,32 @@ export const projects: Project[] = [
       es: "Sitio de una fundación de salud reconstruido como export estático para un hosting solo FTP. Migré 11 endpoints a PHP para que la integración de citas siga funcionando sin servidor Node.",
     },
     operated: {
-      en: "Static export on FTP-only hosting, deployed with GitHub Actions.",
-      es: "Export estático en hosting solo FTP, desplegado con GitHub Actions.",
+      en: "Static export on FTP-only hosting, deployed with GitHub Actions. A small PHP proxy keeps the appointments API token on the server.",
+      es: "Export estático en hosting solo FTP, desplegado con GitHub Actions. Un pequeño proxy en PHP mantiene el token de la API de citas en el servidor.",
     },
-    stack: ["Next.js", "PHP", "GitHub Actions", "Tailscale"],
+    stack: ["Next.js", "PHP", "GitHub Actions"],
+  },
+  {
+    name: "What to do Cartagena",
+    domain: "whattodocartagena.com",
+    url: "https://whattodocartagena.com/",
+    image: "/projects/whattodo/screenshot.jpg",
+    sector: { en: "Tourist guide, Cartagena", es: "Guía turística, Cartagena" },
+    summary: {
+      en: "An interactive guide to Cartagena de Indias: events, local businesses, tourist routes and history, with a map and installable as a PWA.",
+      es: "Guía interactiva de Cartagena de Indias: eventos, comercios, rutas turísticas e historia, con mapa e instalable como PWA.",
+    },
+    operated: {
+      en: "Front end and Go API deployed to my droplet with GHCR and GitHub Actions.",
+      es: "Frontend y API en Go desplegados en mi droplet con GHCR y GitHub Actions.",
+    },
+    stack: ["Next.js", "Go", "PostgreSQL", "PWA"],
   },
   {
     name: "Grupo La Fe",
     domain: "grupolafecartagena.org",
     url: "https://www.grupolafecartagena.org/",
+    image: "/projects/grupo-la-fe/screenshot.jpg",
     logo: "/projects/grupo-la-fe/logo.png",
     sector: { en: "Gambling recovery support, Cartagena", es: "Apoyo en recuperación de ludopatía, Cartagena" },
     summary: {
@@ -126,19 +166,19 @@ export const projects: Project[] = [
 
 export const otherBuilds: { name: string; url: string; summary: Localized }[] = [
   {
-    name: "iforevents",
+    name: "IForevents",
     url: "https://iforevents.com/",
     summary: {
-      en: "Event tracking and analytics API in Go with ClickHouse, Redis and RabbitMQ. Self-hosted with Docker.",
-      es: "API de tracking y analítica de eventos en Go con ClickHouse, Redis y RabbitMQ. Self-hosted con Docker.",
+      en: "Side project with Innovafour: self-hosted product analytics, installed with one Docker command. I contributed to the dashboard.",
+      es: "Proyecto paralelo con Innovafour: analítica de producto self-hosted, se instala con un comando de Docker. Contribuí en el dashboard.",
     },
   },
   {
-    name: "What to do Cartagena",
-    url: "https://whattodocartagena.com/",
+    name: "Innovafour",
+    url: "https://innovafour.com/",
     summary: {
-      en: "Tourist guide with a Leaflet map, local events and routes.",
-      es: "Guía turística con mapa en Leaflet, eventos locales y rutas.",
+      en: "The software company I'm a partner in, as a side project. It's home to iHabitar, Reserday and IForevents.",
+      es: "La empresa de software de la que soy socio, como proyecto paralelo. Ahí viven iHabitar, Reserday e IForevents.",
     },
   },
 ]

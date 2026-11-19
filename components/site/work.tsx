@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useId, useState } from "react"
+import { useEffect, useId, useRef, useState, type PointerEvent } from "react"
 import { otherBuilds, projects, type Project } from "@/lib/content"
 import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
@@ -60,7 +60,54 @@ function BrowserFrame({ project }: { project: Project }) {
   )
 }
 
-function ProjectRow({ project, defaultOpen }: { project: Project; defaultOpen?: boolean }) {
+/**
+ * Desktop-only: while the pointer is over a closed row, a small screenshot
+ * trails the cursor. One element for the whole list; position is written to
+ * CSS variables so moving the mouse never re-renders React.
+ */
+function useHoverPreview() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [image, setImage] = useState<string | null>(null)
+  const [enabled, setEnabled] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)")
+    const update = () => setEnabled(mq.matches)
+    update()
+    mq.addEventListener("change", update)
+    return () => mq.removeEventListener("change", update)
+  }, [])
+
+  const move = (e: PointerEvent) => {
+    const el = ref.current
+    if (!el) return
+    el.style.setProperty("--px", `${e.clientX}px`)
+    el.style.setProperty("--py", `${e.clientY}px`)
+  }
+
+  const preview = enabled ? (
+    <div
+      ref={ref}
+      aria-hidden
+      className={cn(
+        "pointer-events-none fixed left-0 top-0 z-40 w-72 overflow-hidden rounded-frame border border-line bg-surface shadow-[0_24px_48px_-24px_rgb(13_18_32/0.45)]",
+        "translate-x-[calc(var(--px,0px)+1.5rem)] translate-y-[calc(var(--py,0px)-50%)]",
+        "transition-[translate,opacity,scale] duration-[var(--dur-3)] ease-[var(--ease-out)]",
+        image ? "scale-100 opacity-100" : "scale-90 opacity-0",
+      )}
+    >
+      <div className="relative aspect-[16/10]">
+        {image && <Image src={image} alt="" fill sizes="18rem" className="object-cover object-top" />}
+      </div>
+    </div>
+  ) : null
+
+  return { preview, move, show: (src?: string) => enabled && setImage(src ?? null), hide: () => setImage(null) }
+}
+
+type Hover = ReturnType<typeof useHoverPreview>
+
+function ProjectRow({ project, defaultOpen, hover }: { project: Project; defaultOpen?: boolean; hover: Hover }) {
   const { language, t } = useLanguage()
   const [open, setOpen] = useState(!!defaultOpen)
   const panelId = useId()
@@ -72,13 +119,19 @@ function ProjectRow({ project, defaultOpen }: { project: Project; defaultOpen?: 
           type="button"
           aria-expanded={open}
           aria-controls={panelId}
-          onClick={() => setOpen((o) => !o)}
-          className="group flex w-full items-center gap-4 py-6 text-left sm:gap-8 sm:py-8"
+          onClick={() => {
+            setOpen((o) => !o)
+            hover.hide()
+          }}
+          onPointerEnter={() => !open && hover.show(project.image)}
+          onPointerLeave={hover.hide}
+          onPointerMove={hover.move}
+          className="group flex w-full items-center gap-4 py-5 text-left sm:gap-8 sm:py-6"
         >
           <span className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
             <span
               className={cn(
-                "semi-wide text-title font-bold tracking-[-0.02em] transition-colors duration-[var(--dur-1)] sm:text-[clamp(1.75rem,1rem+2.4vw,2.75rem)]",
+                "semi-wide text-title font-bold tracking-[-0.02em] transition-colors duration-[var(--dur-1)] sm:text-[clamp(1.375rem,1rem+1.2vw,2rem)]",
                 open ? "text-accent" : "text-text group-hover:text-accent",
               )}
             >
@@ -87,7 +140,11 @@ function ProjectRow({ project, defaultOpen }: { project: Project; defaultOpen?: 
             <span className="text-small text-text-2">{project.sector[language]}</span>
           </span>
           <span className="hidden items-center gap-2 font-mono text-meta text-text-3 md:flex">
-            <span aria-hidden className="size-1.5 rounded-full bg-live" />
+            {project.status === "beta" ? (
+              <span className="rounded-chip border border-line-strong px-1.5 py-px font-sans text-text-2">{t.work.beta}</span>
+            ) : (
+              <span aria-hidden className="size-1.5 rounded-full bg-live" />
+            )}
             {project.domain}
           </span>
           <span
@@ -160,10 +217,15 @@ function ProjectRow({ project, defaultOpen }: { project: Project; defaultOpen?: 
                 </div>
               )}
 
-              <div className="mt-auto pt-2">
+              <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-2 pt-2">
                 <ExternalLink href={project.url} className="font-semibold text-text">
                   {t.work.visit} {project.domain}
                 </ExternalLink>
+                {project.links?.map((l) => (
+                  <ExternalLink key={l.url} href={l.url} className="text-small text-text-2">
+                    {l.label[language]}
+                  </ExternalLink>
+                ))}
               </div>
             </div>
           </div>
@@ -175,14 +237,16 @@ function ProjectRow({ project, defaultOpen }: { project: Project; defaultOpen?: 
 
 export function Work() {
   const { language, t } = useLanguage()
+  const hover = useHoverPreview()
 
   return (
     <Section id="work" title={t.work.title} lede={t.work.lede}>
       <ul>
         {projects.map((p, i) => (
-          <ProjectRow key={p.domain} project={p} defaultOpen={i === 0} />
+          <ProjectRow key={p.domain} project={p} defaultOpen={i === 0} hover={hover} />
         ))}
       </ul>
+      {hover.preview}
 
       <div className="mt-16 lg:ml-[33%]">
         <h3 className="mb-5 text-small font-semibold text-text-2">{t.work.other}</h3>
